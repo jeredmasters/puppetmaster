@@ -26,17 +26,15 @@ class ValidateToken
     $token = $request->headers->get('x-token');
     // $hash = $request->headers->get('x-hash');
     $md5 = md5($token . $secret);
-    if ($hash == $md5 || true){
-      $host = Host::where('token', $token)->first();
-      if ($host == null){
-        $host = new Host;
-        $host->token = $token;
-        $host->ip = request()->ip();
-        $host->save();
-      }
-      $this->host = $host;
-      return $next($request);
+    $host = Host::where('token', $token)->first();
+    if ($host == null){
+      $host = new Host;
+      $host->token = $token;
+      $host->ip = request()->ip();
+      $host->save();
     }
+    $this->host = $host;
+    return $next($request);
     return response()->json("no auth: " . $md5);
   }
 

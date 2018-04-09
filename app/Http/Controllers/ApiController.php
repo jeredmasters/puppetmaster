@@ -8,6 +8,7 @@ use App\Benchmark;
 use Illuminate\Routing\Controller as BaseController;
 use App\Http\Middleware\ValidateToken;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class ApiController extends BaseController
 {    
@@ -21,15 +22,14 @@ class ApiController extends BaseController
 
     $lastBenchmark = Benchmark::where('host_id', $host->id)->orderBy('created_at', 'DESC')->first();
     if ($lastBenchmark == null){
-      return response()->json("benchmark");
+      return response("benchmark");
     }
 
-    $results = Result::where('host_id', $host->id)->where('status', 'complete')->where('modified_at', '>', $lastBenchmark->created_at)->count();
-    $datediff = time() - $lastBenchmark->created_at;
-    $daysSince = $datediff / (60 * 60 * 24);
+    $results = Result::where('host_id', $host->id)->where('status', 'complete')->where('updated_at', '>', $lastBenchmark->created_at)->count();
+    $daysSince = Carbon::now()->diffInDays($lastBenchmark->created_at);
 
     if ($results > 50 || $daysSince > 10){
-      return response()->json("benchmark");
+      return response("benchmark");
     }
 
 
@@ -40,7 +40,8 @@ class ApiController extends BaseController
     $min_test = null;
     foreach($tests as $test){      
       $count = Result::where('test_id', $test->id)->count();
-      if ($count < $min_count){
+      if ($count < $min_count || $min_test == null){
+        $min_count = $count;
         $min_test = $test;
       }
       if ($count == 0){
@@ -55,14 +56,14 @@ class ApiController extends BaseController
       $result->status = 'pending';
       $result->save();
 
-      return response()->json($min_test->toString());
+      return response($min_test->toString());
     }
 
-    return response()->json("none available??");
+    return response("none available??");
   }
 
   public function saveResult(Request $request){
-    $test_id = $request->input('test_id');
+    $test_id = $request->input('test');
     $fitness = $request->input('fitness');
     $millis = $request->input('millis');
 
@@ -81,7 +82,7 @@ class ApiController extends BaseController
         ->first();
 
       if ($result == null){
-        return response()->json("test not requested??");
+        return response("test not requested??");
       }
 
       $result->status = 'complete';
@@ -90,6 +91,6 @@ class ApiController extends BaseController
       $result->save();
     }
 
-    return response()->json("done");
+    return response("done");
   }
 }
