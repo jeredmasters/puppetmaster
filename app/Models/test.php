@@ -22,6 +22,6 @@ class Test extends Model
         $this->duration_variance
       ];
 
-      return implode("|", $vars);
+      return implode(",", $vars);
     }
 }

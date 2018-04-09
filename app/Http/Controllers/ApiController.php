@@ -19,13 +19,13 @@ class ApiController extends BaseController
   public function getAssignment(){
     $host = $this->validator->getHost();
 
-    $lastBenchmark = Benchmark::where('host_id', $host->id)->orderBy('inserted_at', 'DESC')->first();
+    $lastBenchmark = Benchmark::where('host_id', $host->id)->orderBy('created_at', 'DESC')->first();
     if ($lastBenchmark == null){
       return response()->json("benchmark");
     }
 
-    $results = Result::where('host_id', $host->id)->where('status', 'complete')->where('modified_at', '>', $lastBenchmark->inserted_at)->count();
-    $datediff = time() - $lastBenchmark->inserted_at;
+    $results = Result::where('host_id', $host->id)->where('status', 'complete')->where('modified_at', '>', $lastBenchmark->created_at)->count();
+    $datediff = time() - $lastBenchmark->created_at;
     $daysSince = $datediff / (60 * 60 * 24);
 
     if ($results > 50 || $daysSince > 10){

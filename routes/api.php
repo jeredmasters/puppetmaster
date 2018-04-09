@@ -15,4 +15,5 @@ use Illuminate\Http\Request;
 
 Route::middleware('api')->group(function () {
   Route::get('new', 'ApiController@getAssignment');
+  Route::get('save', 'ApiController@saveResult');
 });
