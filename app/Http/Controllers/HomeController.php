@@ -17,10 +17,10 @@ class HomeController extends BaseController
     $tests = Test::count();
     $results = Result::count();
 
-    if ($results > 0){
-      return response("$tests / $results = " . ($tests / $results));
+    if ($tests > 0){
+      return response("$results / $tests = " . ($results / $tests));
     }
-    return response("none");
+    return response("no tests");
   }
 
 
