@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Test;
 use App\Result;
 use App\Benchmark;
+use App\Chromosome;
 use Illuminate\Routing\Controller as BaseController;
 use App\Http\Middleware\ValidateToken;
 use Illuminate\Http\Request;
@@ -90,6 +91,26 @@ class ApiController extends BaseController
       $result->millis = $millis;
       $result->save();
     }
+
+    return response("done");
+  }
+
+  
+  public function saveChromosome(Request $request){
+    $test_id = $request->input('test');
+    $fitness = $request->input('fitness');
+    $millis = $request->input('millis');
+    $chromosome = $request->input('chromosome');
+
+    $host = $this->validator->getHost();
+
+    $c = new Chromosome;
+    $c->host_id = $host->id;
+    $c->test_id = $test_id;
+    $c->fitness = $fitness;
+    $c->millis = $millis;
+    $c->chromosome = $chromosome;
+    $c->save();
 
     return response("done");
   }
