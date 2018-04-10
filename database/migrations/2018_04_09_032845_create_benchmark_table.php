@@ -28,6 +28,6 @@ class CreateBenchmarkTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('benchmark');
+        Schema::dropIfExists('benchmarks');
     }
 }

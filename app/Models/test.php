@@ -19,7 +19,8 @@ class Test extends Model
         $this->crossover_rate,
         $this->mutation_rate,
         $this->mutation_variance,
-        $this->duration_variance
+        $this->duration_variance,
+        $this->gradient_decent
       ];
 
       return implode(",", $vars);
