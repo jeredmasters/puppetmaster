@@ -10,6 +10,7 @@ use Illuminate\Routing\Controller as BaseController;
 use App\Http\Middleware\ValidateToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ApiController extends BaseController
 {    
@@ -33,31 +34,24 @@ class ApiController extends BaseController
       return response("benchmark");
     }
 
-
-
-    $tests = Test::all();
-
-    $min_count = -1;
-    $min_test = null;
-    foreach($tests as $test){      
-      $count = Result::where('test_id', $test->id)->count();
-      if ($count < $min_count || $min_test == null){
-        $min_count = $count;
-        $min_test = $test;
-      }
-      if ($count == 0){
-        break;
-      }
-    }   
+    
+    $min_test = DB::table('tests')
+    ->join('results', 'tests.id', '=', 'results.test_id')
+    ->select('tests.id', DB::raw('count(results.id)'))
+    ->groupBy('tests.id')
+    ->orderByRaw('2 desc')
+    ->first();
 
     if ($min_test != null){
+      $test = Test::find($min_test->id);
+
       $result = new Result;
       $result->host_id = $host->id;
-      $result->test_id = $min_test->id;
+      $result->test_id = $test->id;
       $result->status = 'pending';
       $result->save();
 
-      return response($min_test->toString());
+      return response($test->toString());
     }
 
     return response("none available??");

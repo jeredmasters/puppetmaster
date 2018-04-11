@@ -22,6 +22,4 @@ class HomeController extends BaseController
     }
     return response("no tests");
   }
-
-
 }
