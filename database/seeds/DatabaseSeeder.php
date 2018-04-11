@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
                       "population" => $pop_size,
                       "generations" => $gens,     
                       "selection_pressure" => $selection_pressure,
-                      "duration" => 100 * 120,
+                      "duration" => $duration,
                       "crossover_rate" => 6,
                       "mutation_rate" => $mutation_rate,
                       "mutation_variance" => $mutation_variance,
