@@ -39,7 +39,7 @@ class ApiController extends BaseController
     ->join('results', 'tests.id', '=', 'results.test_id')
     ->select('tests.id', DB::raw('count(results.id)'))
     ->groupBy('tests.id')
-    ->orderByRaw('2 desc')
+    ->orderByRaw('2 asc')
     ->first();
 
     if ($min_test != null){
