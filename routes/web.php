@@ -11,5 +11,5 @@
 |
 */
 
-Route::get('/', 'HomeController@getRatio');
-Route::get('results/', 'HomeController@chart');
+Route::get('/', 'HomeController@index');
+Route::get('results/', 'HomeController@results');
