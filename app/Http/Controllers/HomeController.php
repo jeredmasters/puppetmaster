@@ -10,6 +10,7 @@ use Illuminate\Routing\Controller as BaseController;
 use App\Http\Middleware\ValidateToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends BaseController
 {    
