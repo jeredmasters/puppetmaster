@@ -22,4 +22,21 @@ class HomeController extends BaseController
     }
     return response("no tests");
   }
+
+  public function chart(){
+    $results = [];
+
+    for ($pop_size = 20; $pop_size <= 200; $pop_size += 20) {
+      for ($gens = 20; $gens <= 200; $gens += 20) {
+        $fitness = DB::table('results')
+              ->join('tests', 'tests.id', '=', 'results.test_id')
+              ->where('tests.population', '=', $pop_size)
+              ->where('tests.generations', '=', $gens)
+              ->avg('fitness');
+        $results[$pop_size][$gens] = $fitness;
+      }
+    }
+
+    return response()->json($results);
+  }
 }
