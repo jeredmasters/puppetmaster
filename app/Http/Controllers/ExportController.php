@@ -44,6 +44,16 @@ class ExportController extends BaseController
             ->limit(1000)
             ->get()
         );
+      case "nice_results":
+        return response()->json(
+          DB::table('results')
+            ->join('tests', 'tests.id', '=', 'results.test_id')
+            ->inRandomOrder()            
+            ->limit(1000)
+            ->get()
+        );
+
+        
     }
     
   }
