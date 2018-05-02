@@ -17,4 +17,5 @@ Route::middleware('api')->group(function () {
   Route::get('new', 'ApiController@getAssignment');
   Route::post('save', 'ApiController@saveResult');
   Route::post('chromosome', 'ApiController@saveChromosome');
+  
 });
