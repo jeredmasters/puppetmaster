@@ -19,4 +19,17 @@ class Result extends Model
     {
         return $this->hasOne('App\Test');
     }
+
+
+    public static function findOrCreate($a){
+      $i = static::where($a)->first();
+      if ($i == null){
+        $i = new static;
+        foreach($a as $key => $value){
+          $i->$key = $value;
+        }
+        $i->save();
+      }
+      return $i;
+    }
 }

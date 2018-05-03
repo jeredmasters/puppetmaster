@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 class HomeController extends BaseController
 {    
   public function index(){
-    $tests = Test::count();
+    $tests = Test::where('active', true)->count();
     $results = Result::count();
     $ratio = 0;
 
@@ -26,24 +26,34 @@ class HomeController extends BaseController
     return view("index", ['tests' => $tests, 'results' => $results, 'ratio' => $ratio]);
   }
 
-  public function results(){
+  public function results(Request $request){
+    $parameters = $request->input('parameters');
+    
     $results = [];
 
-    for ($pop_size = 20; $pop_size <= 200; $pop_size += 20) {
+    $y_col = 'results.'.$parameters['y']['column'];
+    foreach($parameters['sets'] as $set){
       $data = [];
-      for ($gens = 20; $gens <= 200; $gens += 20) {
-        $fitness = DB::table('results')
-              ->join('tests', 'tests.id', '=', 'results.test_id')
-              ->where('tests.population', '=', $pop_size)
-              ->where('tests.generations', '=', $gens)
-              ->avg('fitness');
+      foreach($parameters['x']['values'] as $x){
+        $x_col = 'tests.'.$parameters['x']['column'];
+        $q = DB::table('results')
+          ->join('tests', 'tests.id', '=', 'results.test_id')
+          ->where($x_col, '=', $x)
+          ->where('tests.active', true);
+
+        foreach($set['filter'] as $col => $val){
+          $q = $q->where('tests.'.$col, $val);
+        }
+
+        $y = $q->avg($y_col);
+
         $data[] = [
-          "x" => $gens,
-          "y" => $fitness
+          "x" => $x,
+          "y" => floatval($y)
         ];
       }
       $results[] = [
-        "population" => $pop_size,
+        "label" => $set['label'],
         "data" => $data
       ];
     }

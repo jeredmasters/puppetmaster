@@ -12,6 +12,6 @@
 */
 
 Route::get('/', 'HomeController@index');
-Route::get('results/', 'HomeController@results');
+Route::post('results/', 'HomeController@results');
 
 Route::get('dump/{type}', 'ExportController@dump');

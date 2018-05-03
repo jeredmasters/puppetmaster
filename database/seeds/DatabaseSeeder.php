@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
                       "duration_variance" => $duration_variance,
                       "gradient_decent" => $gradient_decent
                     ];
-                    $this->createTest($t);
+                    Test::findOrCreate($t, true);
                   }
                 }
               }
@@ -43,14 +43,5 @@ class DatabaseSeeder extends Seeder
     }
   }
 
-  private function createTest($t){
-    $test = Test::where($t)->first();
-    if ($test == null){
-      $test = new Test;
-      foreach($t as $key => $value){
-        $test->$key = $value;
-      }
-      $test->save();
-    }
-  }
+
 }

@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
@@ -46,6 +45,13 @@ class Recount extends Command
         ->delete();
 
       DB::table('tests')
-        ->update(['assignments' => DB::raw('(select count(results.id) from results where tests.id = results.test_id)')]);      
+        ->update(['assignments' => DB::raw('(select count(results.id) from results where tests.id = results.test_id)')]);   
+        
+        
+      DB::table('results')
+        ->whereRaw('(select count(id) from benchmarks where benchmarks.host_id = results.host_id) > 0')
+        ->whereRaw('millis IS NOT NULL')
+        ->update(['scaled_millis' => DB::raw('results.millis / (select avg(millis) from benchmarks where benchmarks.host_id = results.host_id)')]);
+        
     }
 }

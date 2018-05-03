@@ -25,4 +25,23 @@ class Test extends Model
 
       return implode(",", $vars);
     }
+
+
+    public static function findOrCreate($t, $activate = false){
+      $test = static::where($t)->first();
+      if ($test == null){
+        $test = new static;
+        foreach($t as $key => $value){
+          $test->$key = $value;
+        }
+        $test->save();
+      }
+      else{
+        if (!$test->active && $activate){
+          $test->active = true;
+          $test->save();
+        }
+      }
+      return $test;
+    }
 }
