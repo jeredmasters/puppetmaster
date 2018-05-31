@@ -83,7 +83,7 @@ function gradientDescent(){
     c = i * Math.floor(255 / params.sets.length)
     return [c, c, 50]
   }
-  createGraph('chart3', "Gradient Descent", params, color)
+  createGraph('chart3', "Steepest Descent", params, color)
 }
 
 function selectionPressure(){
