@@ -8,9 +8,10 @@
         <title>Laravel</title>
 
         <!-- Fonts -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script> -->
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="/js/chart.js"></script>
         <script src="/js/charting.js"></script>
         <script src="/js/home_charts.js"></script>
 

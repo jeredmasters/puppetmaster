@@ -34,6 +34,7 @@ class HomeController extends BaseController
     $y_col = 'results.'.$parameters['y']['column'];
     foreach($parameters['sets'] as $set){
       $data = [];
+      $error = [];
       foreach($parameters['x']['values'] as $x){
         $x_col = 'tests.'.$parameters['x']['column'];
         $q = DB::table('results')
@@ -51,10 +52,12 @@ class HomeController extends BaseController
           "x" => $x,
           "y" => floatval($y)
         ];
+        $error[] = $q->max($y_col) - $q->min($y_col);
       }
       $results[] = [
         "label" => $set['label'],
-        "data" => $data
+        "data" => $data,
+        "error" => $error
       ];
     }
 

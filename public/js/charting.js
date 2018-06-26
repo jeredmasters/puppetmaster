@@ -2,11 +2,16 @@ function createGraph(elemId, title, params, colorFunc) {
   $.post("/results/", {parameters: params}, function (response) {
     console.log(response);
     var i = -1;
+    labels = null;
     dataSets = response.map(function (set) {
       i += 1;
+      if (labels == null){
+        labels = set.data.map(function (i) {return i.x;})
+      }
       return {
         label: set.label,
-        data: set.data,
+        data: set.data.map(function (i) {return i.y;}),
+        error: set.error,
         backgroundColor: [
             'rgba('+ colorFunc(i).join(', ') + ', 0.2)',
         ],
@@ -17,8 +22,10 @@ function createGraph(elemId, title, params, colorFunc) {
       }
     })
     ctx = document.getElementById(elemId).getContext('2d');
-    window.myScatter = Chart.Scatter(ctx, {
+    window.myScatter = new Chart(ctx, {
+      type: 'lineError',
       data: {
+        labels: labels,
         datasets: dataSets
       },
       options: {
