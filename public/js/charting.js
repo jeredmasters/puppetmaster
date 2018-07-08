@@ -12,6 +12,7 @@ function createGraph(elemId, title, params, colorFunc) {
         label: set.label,
         data: set.data.map(function (i) {return i.y;}),
         error: set.error,
+        errorColor: 'rgba('+ colorFunc(i).join(', ') + ', 1)',
         backgroundColor: [
             'rgba('+ colorFunc(i).join(', ') + ', 0.2)',
         ],

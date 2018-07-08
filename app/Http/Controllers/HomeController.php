@@ -52,7 +52,7 @@ class HomeController extends BaseController
           "x" => $x,
           "y" => floatval($y)
         ];
-        $error[] = $q->max($y_col) - $q->min($y_col);
+        $error[] = $this->stdDev($q->pluck($y_col)->toArray());
       }
       $results[] = [
         "label" => $set['label'],
@@ -62,5 +62,20 @@ class HomeController extends BaseController
     }
 
     return response()->json($results);
+  }
+
+  private static function stdDev($a){
+    $n = count($a);
+    if ($n === 0) {
+        trigger_error("The array has zero elements", E_USER_WARNING);
+        return false;
+    }
+    $mean = array_sum($a) / $n;
+    $carry = 0.0;
+    foreach ($a as $val) {
+        $d = ((double) $val) - $mean;
+        $carry += $d * $d;
+    };
+    return sqrt($carry / $n);
   }
 }
