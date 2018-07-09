@@ -74,9 +74,8 @@ class HomeController extends BaseController
 
   private static function stdDev($a){
     $n = count($a);
-    if ($n === 0) {
-        trigger_error("The array has zero elements", E_USER_WARNING);
-        return false;
+    if ($n === 0) {        
+        return 0;
     }
     $mean = array_sum($a) / $n;
     $carry = 0.0;
