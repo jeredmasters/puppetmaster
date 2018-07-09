@@ -80,7 +80,7 @@ class DatabaseSeeder extends Seeder
   }
   
   private function selectionPressure(){
-    foreach([2, 4] as $selection_pressure){
+    foreach([2, 3, 4] as $selection_pressure){
       for ($gens = 20; $gens <= 200; $gens += 20) {
         $t = [
           "generations" => $gens,     
