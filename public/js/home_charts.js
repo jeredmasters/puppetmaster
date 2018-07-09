@@ -141,7 +141,7 @@ function selectionPressure(){
   };
   var color = function (i) {
     c = i * Math.floor(255 / params.sets.length)
-    return [150, Math.floor((255-c) / 2), 255-c]
+    return [0, Math.floor((255-c) / 2), 255-c]
   }
   createGraph('chart4', "Selection Pressure", params, color)
 }
