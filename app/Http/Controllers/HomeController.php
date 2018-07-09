@@ -41,10 +41,13 @@ class HomeController extends BaseController
           ->join('tests', 'tests.id', '=', 'results.test_id')
           ->where($x_col, '=', $x)
           ->where('tests.active', true);
+        foreach($parameters['static'] as $key => $value){
+          $q->where($key, $value);
+        }
 
         foreach($set['filter'] as $col => $val){
           $q = $q->where('tests.'.$col, $val);
-        }
+        }        
 
         $y = $q->avg($y_col);
 

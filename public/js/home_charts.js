@@ -9,6 +9,15 @@ $(document).ready(function (){
 
 function plotCharts(){
   var params = {
+    static: {  
+      selection_pressure: 2,
+      duration: 100 * 150,
+      crossover_rate: 6,
+      //mutation_rate: 4,
+      //mutation_variance: 0,
+      duration_variance: 0,
+      //gradient_decent: 0
+    },
     sets: [
       {label: 20, filter: {population:20}},
       {label: 40, filter: {population:40}},
@@ -40,6 +49,15 @@ function plotCharts(){
 
 function plotMutationType(){
   var params = {
+    static: {
+      population: 100,   
+      selection_pressure: 2,
+      duration: 100 * 150,
+      crossover_rate: 6,
+      mutation_rate: 4,
+      duration_variance: 0,
+      gradient_decent: 0
+    },
     sets: [
       {label: "None", filter: {mutation_variance:0}},
       {label: "Linear", filter: {mutation_variance:1}},
@@ -65,6 +83,15 @@ function plotMutationType(){
 
 function gradientDescent(){
   var params = {
+    static: {
+      population: 100,    
+      selection_pressure: 2,
+      duration: 100 * 150,
+      crossover_rate: 6,
+      mutation_rate: 4,
+      mutation_variance: 0,
+      duration_variance: 0
+    },
     sets: [
       {label: "Off", filter: {gradient_decent:0}},
       {label: "On", filter: {gradient_decent:1}},
@@ -88,6 +115,15 @@ function gradientDescent(){
 
 function selectionPressure(){
   var params = {
+    static: {
+      population: 100,
+      duration: 100 * 150,
+      crossover_rate: 6,
+      mutation_rate: 4,
+      mutation_variance: 0,
+      duration_variance: 0,
+      gradient_decent: 0
+    },
     sets: [
       {label: "2", filter: {selection_pressure:2}},
       {label: "4", filter: {selection_pressure:4}},
@@ -111,6 +147,15 @@ function selectionPressure(){
 
 function durationVariance(){
   var params = {
+    static: {
+      population: 100,
+      selection_pressure: 2,
+      duration: 100 * 150,
+      crossover_rate: 6,
+      mutation_rate: 4,
+      mutation_variance: 0,
+      gradient_decent: 0
+    },
     sets: [
       {label: "Off", filter: {duration_variance:0}},
       {label: "On", filter: {duration_variance:1}},
@@ -135,6 +180,15 @@ function durationVariance(){
 
 function durationVarianceMillis(){
   var params = {
+    static: {
+      population: 100, 
+      selection_pressure: 2,
+      duration: 100 * 150,
+      crossover_rate: 6,
+      mutation_rate: 4,
+      mutation_variance: 0,
+      gradient_decent: 0
+    },
     sets: [
       {label: "Off", filter: {duration_variance: 0}},
       {label: "On", filter: {duration_variance: 1}},

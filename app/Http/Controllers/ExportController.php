@@ -19,6 +19,7 @@ class ExportController extends BaseController
       case "tests":
         return response()->json(
           DB::table('tests')
+            ->where('active', true)
             ->inRandomOrder()
             ->limit(1000)
             ->get()
@@ -48,6 +49,7 @@ class ExportController extends BaseController
         return response()->json(
           DB::table('results')
             ->join('tests', 'tests.id', '=', 'results.test_id')
+            ->where('tests.active', true)
             ->inRandomOrder()            
             ->limit(1000)
             ->get()
