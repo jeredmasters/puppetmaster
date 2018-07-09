@@ -126,7 +126,7 @@ function selectionPressure(){
     },
     sets: [
       {label: "2", filter: {selection_pressure:2}},
-      {label: "2", filter: {selection_pressure:3}},
+      {label: "3", filter: {selection_pressure:3}},
       {label: "4", filter: {selection_pressure:4}},
     ],
     x: {
