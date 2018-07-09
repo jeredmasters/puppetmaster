@@ -16,7 +16,12 @@ class HomeController extends BaseController
 {    
   public function index(){
     $tests = Test::where('active', true)->count();
-    $results = Result::count();
+    $results = DB::table('results')
+      ->join('tests', 'tests.id', '=', 'results.test_id')
+      ->where('tests.active', true)
+      ->inRandomOrder()            
+      ->limit(1000)
+      ->count();
     $ratio = 0;
 
     if ($tests > 0){
