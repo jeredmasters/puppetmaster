@@ -58,9 +58,9 @@ class HomeController extends BaseController
 
         $data[] = [
           "x" => $x,
-          "y" => floatval($y)
+          "y" => floatval($y),
+          "stdDev" => $this->stdDev($q->pluck($y_col)->toArray())
         ];
-        $error[] = $this->stdDev($q->pluck($y_col)->toArray());
       }
       $results[] = [
         "label" => $set['label'],

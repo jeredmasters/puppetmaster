@@ -11,7 +11,7 @@ function createGraph(elemId, title, params, colorFunc) {
       return {
         label: set.label,
         data: set.data.map(function (i) {return i.y;}),
-        error: set.error,
+        error: set.data.map(function (i) {return i.stdDev;}),
         errorColor: 'rgba('+ colorFunc(i).join(', ') + ', 1)',
         backgroundColor: [
             'rgba('+ colorFunc(i).join(', ') + ', 0.2)',
@@ -51,5 +51,42 @@ function createGraph(elemId, title, params, colorFunc) {
         }
       }
     });
+    createTable(elemId+"_table", title, labels, dataSets);
   });
+}
+
+function createTable(tableId, title, labels, data){
+
+  var $table = $('<table>');
+  $table.addClass("table table-sm");
+
+  .append('<thead>').children('thead')
+  .append('<tr />').children('tr').append(
+    '<th>-</th><th>-</th>' +
+    labels.map(function (label){
+      return '<th>' + label + '</th>';
+    }).join()
+  );
+
+  var $tbody = $table.append('<tbody />').children('tbody');
+
+  for (set of data) {
+    $tbody.append('<tr />').children('tr:last')
+    .append(
+      '<td rowspan="2" class="row-header">'+set.label+'</td><td>mean</td>' +
+      set.data.map(function (i){
+        return '<td>' + parseInt(i) + '</td>';
+      }).join()
+    );
+  
+    $tbody.append('<tr />').children('tr:last')
+    .append(    
+      '<td>var</td>' +
+      set.error.map(function (i){
+        return '<td>' + parseInt(i) + '</td>';
+      }).join()
+    );
+  }
+
+  $table.appendTo('#' + tableId);
 }
