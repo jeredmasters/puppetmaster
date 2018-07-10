@@ -60,7 +60,7 @@ function createTable(tableId, title, labels, data){
   var $table = $('<table>');
   $table.addClass("table table-sm");
 
-  .append('<thead>').children('thead')
+  $table.append('<thead>').children('thead')
   .append('<tr />').children('tr').append(
     '<th>-</th><th>-</th>' +
     labels.map(function (label){
