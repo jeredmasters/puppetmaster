@@ -5,6 +5,7 @@ $(document).ready(function (){
   selectionPressure();
   durationVariance();
   durationVarianceMillis();
+  crossoverRate();
 });
 
 function plotCharts(){
@@ -146,6 +147,43 @@ function selectionPressure(){
   createGraph('chart4', "Selection Pressure", params, color)
 }
 
+function crossoverRate(){
+  var params = {
+    static: {
+      selection_pressure: 2,
+      population: 100,
+      duration: 100 * 150,
+      mutation_rate: 4,
+      mutation_variance: 0,
+      duration_variance: 0,
+      gradient_decent: 0
+    },
+    sets: [
+      {label: "0", filter: {crossover_rate:0}},
+      {label: "1", filter: {crossover_rate:1}},
+      {label: "2", filter: {crossover_rate:2}},
+      {label: "3", filter: {crossover_rate:3}},
+      {label: "4", filter: {crossover_rate:4}},
+      {label: "5", filter: {crossover_rate:5}},
+      {label: "6", filter: {crossover_rate:6}}
+    ],
+    x: {
+      label: "Generations",
+      column: 'generations',
+      values: [20,40,60,80,100,120,140,160,180,200]
+    },
+    y: {
+      label: "Fitness",
+      column: 'fitness'
+    }    
+  };
+  var color = function (i) {
+    c = i * Math.floor(255 / params.sets.length)
+    return [c, 0, Math.floor(c / 2)]
+  }
+  createGraph('chart5', "Selection Pressure", params, color)
+}
+
 function durationVariance(){
   var params = {
     static: {
@@ -175,7 +213,7 @@ function durationVariance(){
     c = i * Math.floor(255 / params.sets.length)
     return [150, Math.floor((255-c) / 2), 255-c]
   }
-  createGraph('chart5', "Duration Variance VS Fitness", params, color)
+  createGraph('chart6', "Duration Variance VS Fitness", params, color)
 }
 
 
@@ -208,5 +246,5 @@ function durationVarianceMillis(){
     c = i * Math.floor(255 / params.sets.length)
     return [255-c, c, Math.floor((255-c) / 3) + 100]
   }
-  createGraph('chart6', "Duration Variance VS Runtime", params, color)
+  createGraph('chart7', "Duration Variance VS Runtime", params, color)
 }

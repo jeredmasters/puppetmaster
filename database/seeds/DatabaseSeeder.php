@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
     $this->gradientDescent();
     $this->selectionPressure();
     $this->durationVariance();
+    $this->crossoverRate();
   }
 
   private function parameters($params){
@@ -80,7 +81,7 @@ class DatabaseSeeder extends Seeder
   }
   
   private function selectionPressure(){
-    foreach([2, 3, 4] as $selection_pressure){
+    foreach([1, 2, 3, 4] as $selection_pressure){
       for ($gens = 20; $gens <= 200; $gens += 20) {
         $t = [
           "generations" => $gens,     
@@ -97,6 +98,18 @@ class DatabaseSeeder extends Seeder
         $t = [
           "generations" => $gens,
           "duration_variance" => $duration_variance
+        ];
+        Test::findOrCreate($this->parameters($t), true);
+      }
+    }
+  }
+
+  private function crossoverRate(){
+    foreach([0, 1, 2, 3, 4, 5, 6] as $crossover_rate){
+      for ($gens = 20; $gens <= 200; $gens += 20) {
+        $t = [
+          "generations" => $gens,
+          "crossover_rate" => $crossover_rate
         ];
         Test::findOrCreate($this->parameters($t), true);
       }
