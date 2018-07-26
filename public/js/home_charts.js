@@ -181,7 +181,7 @@ function crossoverRate(){
     c = i * Math.floor(255 / params.sets.length)
     return [c, 0, Math.floor(c / 2)]
   }
-  createGraph('chart5', "Selection Pressure", params, color)
+  createGraph('chart5', "Crossover Rate", params, color)
 }
 
 function durationVariance(){
