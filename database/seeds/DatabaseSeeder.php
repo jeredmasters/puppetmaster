@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
       "mutation_rate" => 4,
       "mutation_variance" => 0,
       "duration_variance" => 0,
-      "gradient_decent" => 0
+      "steepest_descent" => 1
     ];
     foreach($params as $k => $v){
       $default[$k] = $v;
@@ -69,11 +69,11 @@ class DatabaseSeeder extends Seeder
   }
     
   private function gradientDescent(){
-    foreach([0, 1] as $gradient_decent){
+    foreach([0, 1] as $steepest_descent){
       for ($gens = 20; $gens <= 200; $gens += 20) {
         $t = [
           "generations" => $gens,
-          "gradient_decent" => $gradient_decent
+          "steepest_descent" => $steepest_descent
         ];
         Test::findOrCreate($this->parameters($t), true);
       }
@@ -110,6 +110,18 @@ class DatabaseSeeder extends Seeder
         $t = [
           "generations" => $gens,
           "crossover_rate" => $crossover_rate
+        ];
+        Test::findOrCreate($this->parameters($t), true);
+      }
+    }
+  }
+
+  private function mutationRate(){
+    foreach([0, 1, 2, 3, 4, 5, 6] as $mutation_rate){
+      for ($gens = 20; $gens <= 200; $gens += 20) {
+        $t = [
+          "generations" => $gens,
+          "mutation_rate" => $mutation_rate
         ];
         Test::findOrCreate($this->parameters($t), true);
       }

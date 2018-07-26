@@ -17,7 +17,7 @@ function plotCharts(){
       //mutation_rate: 4,
       //mutation_variance: 0,
       duration_variance: 0,
-      //gradient_decent: 0
+      //steepest_descent: 0
     },
     sets: [
       {label: 20, filter: {population:20}},
@@ -57,7 +57,7 @@ function plotMutationType(){
       crossover_rate: 6,
       mutation_rate: 4,
       duration_variance: 0,
-      gradient_decent: 0
+      steepest_descent: 0
     },
     sets: [
       {label: "None", filter: {mutation_variance:0}},
@@ -94,8 +94,8 @@ function gradientDescent(){
       duration_variance: 0
     },
     sets: [
-      {label: "Off", filter: {gradient_decent:0}},
-      {label: "On", filter: {gradient_decent:1}},
+      {label: "Off", filter: {steepest_descent:0}},
+      {label: "On", filter: {steepest_descent:1}},
     ],
     x: {
       label: "Generations",
@@ -123,7 +123,7 @@ function selectionPressure(){
       mutation_rate: 4,
       mutation_variance: 0,
       duration_variance: 0,
-      gradient_decent: 0
+      steepest_descent: 0
     },
     sets: [
       {label: "2", filter: {selection_pressure:2}},
@@ -156,7 +156,7 @@ function crossoverRate(){
       mutation_rate: 4,
       mutation_variance: 0,
       duration_variance: 0,
-      gradient_decent: 0
+      steepest_descent: 0
     },
     sets: [
       {label: "0", filter: {crossover_rate:0}},
@@ -193,7 +193,7 @@ function durationVariance(){
       crossover_rate: 6,
       mutation_rate: 4,
       mutation_variance: 0,
-      gradient_decent: 0
+      steepest_descent: 0
     },
     sets: [
       {label: "Off", filter: {duration_variance:0}},
@@ -226,7 +226,7 @@ function durationVarianceMillis(){
       crossover_rate: 6,
       mutation_rate: 4,
       mutation_variance: 0,
-      gradient_decent: 0
+      steepest_descent: 0
     },
     sets: [
       {label: "Off", filter: {duration_variance: 0}},
