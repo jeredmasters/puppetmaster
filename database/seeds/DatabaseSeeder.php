@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
     $this->selectionPressure();
     $this->durationVariance();
     $this->crossoverRate();
+    $this->mutationRate();
   }
 
   private function parameters($params){
