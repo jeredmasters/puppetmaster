@@ -90,6 +90,15 @@
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class="offset-md-1 col-md-10">
+          <canvas id="chart8" width="400" height="200"></canvas>
+        </div>
+        <div class="offset-md-2 col-md-8">
+          <div  id="chart8_table">
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>
