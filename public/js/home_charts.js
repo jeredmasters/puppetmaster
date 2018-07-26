@@ -6,6 +6,7 @@ $(document).ready(function (){
   durationVariance();
   durationVarianceMillis();
   crossoverRate();
+  mutationRate();
 });
 
 function plotCharts(){
