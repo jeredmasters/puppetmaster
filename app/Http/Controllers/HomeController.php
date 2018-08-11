@@ -45,6 +45,7 @@ class HomeController extends BaseController
         $q = DB::table('results')
           ->join('tests', 'tests.id', '=', 'results.test_id')
           ->where($x_col, '=', $x)
+          ->where('fitness', '!=', -1)
           ->where('tests.active', true);
         foreach($parameters['static'] as $key => $value){
           $q->where($key, $value);
@@ -53,6 +54,8 @@ class HomeController extends BaseController
         foreach($set['filter'] as $col => $val){
           $q = $q->where('tests.'.$col, $val);
         }        
+
+        
 
         $y = $q->avg($y_col);
 
