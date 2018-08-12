@@ -14,7 +14,7 @@ function createGraph(elemId, title, params, colorFunc) {
         error: set.error,
         errorColor: 'rgba('+ colorFunc(i).join(', ') + ', 1)',
         backgroundColor: [
-            'rgba('+ colorFunc(i).join(', ') + ', 0.2)',
+            'rgba('+ colorFunc(i).join(', ') + ', 0.1)',
         ],
         borderColor: [
             'rgba('+ colorFunc(i).join(', ') + ', 1)',
