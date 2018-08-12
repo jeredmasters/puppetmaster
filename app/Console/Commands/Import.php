@@ -59,7 +59,7 @@ class Import extends Command
         "mutation_rate",
         "mutation_variance",
         "duration_variance",
-        "gradient_decent"
+        "steepest_descent"
       ];
 
       foreach($results as $r){

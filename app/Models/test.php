@@ -20,7 +20,8 @@ class Test extends Model
         $this->mutation_rate,
         $this->mutation_variance,
         $this->duration_variance,
-        $this->gradient_decent
+        $this->steepest_descent,
+        $this->obstacle
       ];
 
       return implode(",", $vars);

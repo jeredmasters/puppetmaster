@@ -16,7 +16,12 @@ class HomeController extends BaseController
 {    
   public function index(){
     $tests = Test::where('active', true)->count();
-    $results = Result::count();
+    $results = DB::table('results')
+      ->join('tests', 'tests.id', '=', 'results.test_id')
+      ->where('tests.active', true)
+      ->inRandomOrder()            
+      ->limit(1000)
+      ->count();
     $ratio = 0;
 
     if ($tests > 0){
@@ -40,19 +45,25 @@ class HomeController extends BaseController
         $q = DB::table('results')
           ->join('tests', 'tests.id', '=', 'results.test_id')
           ->where($x_col, '=', $x)
+          ->where('fitness', '!=', -1)
           ->where('tests.active', true);
+        foreach($parameters['static'] as $key => $value){
+          $q->where($key, $value);
+        }
 
         foreach($set['filter'] as $col => $val){
           $q = $q->where('tests.'.$col, $val);
-        }
+        }        
+
+        
 
         $y = $q->avg($y_col);
 
         $data[] = [
           "x" => $x,
-          "y" => floatval($y)
+          "y" => floatval($y),
+          "stdDev" => $this->stdDev($q->pluck($y_col)->toArray())
         ];
-        $error[] = $this->stdDev($q->pluck($y_col)->toArray());
       }
       $results[] = [
         "label" => $set['label'],
@@ -66,9 +77,8 @@ class HomeController extends BaseController
 
   private static function stdDev($a){
     $n = count($a);
-    if ($n === 0) {
-        trigger_error("The array has zero elements", E_USER_WARNING);
-        return false;
+    if ($n === 0) {        
+        return 0;
     }
     $mean = array_sum($a) / $n;
     $carry = 0.0;

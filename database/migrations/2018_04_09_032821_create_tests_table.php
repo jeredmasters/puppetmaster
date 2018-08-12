@@ -23,7 +23,7 @@ class CreateTestsTable extends Migration
             $table->integer('mutation_rate');
             $table->integer('mutation_variance');
             $table->integer('duration_variance');
-            $table->integer('gradient_decent');
+            $table->integer('steepest_descent');
             $table->timestamps();
         });
     }
