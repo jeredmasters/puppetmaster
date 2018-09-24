@@ -1,3 +1,13 @@
+function selectPointStyle(index){
+  var styles = [
+    'circle',
+    'star',
+    'triangle',
+    'rect',
+    'rectRot'
+  ]
+  return styles[index % 5];
+}
 function createGraph(elemId, title, params, colorFunc) {
   $.post("/results/", {parameters: params}, function (response) {
     console.log(response);
@@ -13,9 +23,11 @@ function createGraph(elemId, title, params, colorFunc) {
         data: set.data.map(function (i) {return i.y;}),
         error: set.data.map(function (i) {return i.stdDev;}),
         errorColor: 'rgba('+ colorFunc(i).join(', ') + ', 1)',
-        backgroundColor: [
-            'rgba('+ colorFunc(i).join(', ') + ', 0.2)',
-        ],
+        fill: false,
+        tension: 0.3,
+        radius: 5,
+        pointStyle: selectPointStyle(i),
+        borderWidth:3,
         borderColor: [
             'rgba('+ colorFunc(i).join(', ') + ', 1)',
             
@@ -34,7 +46,14 @@ function createGraph(elemId, title, params, colorFunc) {
           display: true,
           text: title
         },
-        
+        legend: {
+          display: true,       
+          labels: {
+          }
+        },    
+        layout: {
+          padding: 50
+        },    
         scales: {
           xAxes: [{
             scaleLabel: {
