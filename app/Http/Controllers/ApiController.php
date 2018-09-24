@@ -28,9 +28,9 @@ class ApiController extends BaseController
     }
 
     $results = Result::where('host_id', $host->id)->where('status', 'complete')->where('updated_at', '>', $lastBenchmark->created_at)->count();
-    $daysSince = Carbon::now()->diffInDays($lastBenchmark->created_at);
+    $hoursSince = Carbon::now()->diffInHours($lastBenchmark->created_at);
 
-    if ($results > 50 || $daysSince > 10){
+    if ($results > 50 || $hoursSince > 6){
       return response("benchmark");
     }
     
