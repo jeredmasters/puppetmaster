@@ -13,21 +13,36 @@ function createGraph(elemId, title, params, colorFunc) {
     console.log(response);
     var i = -1;
     labels = null;
+    
+    maxVal = 0;
     dataSets = response.map(function (set) {
+      errorBars = {};
       i += 1;
       if (labels == null){
-        labels = set.data.map(function (i) {return i.x;})
+        labels = set.data.map(function (point) {return point.x;})
       }
+      set.data.forEach(function (point){
+        lowerError = point.y;
+        if (point.y > point.stdDev){
+          lowerError = point.stdDev;
+        }
+        errorBars[point.x] = {plus: point.stdDev, minus: lowerError}
+        if (point.y+point.stdDev > maxVal){
+          maxVal = point.y+point.stdDev;
+        }
+        
+      })
       return {
         label: set.label,
-        data: set.data.map(function (i) {return i.y;}),
-        error: set.data.map(function (i) {return i.stdDev;}),
+        data: set.data.map(function (point) {return point.y;}),
+        error: set.data.map(function (point) {return point.stdDev;}),
+        errorBars: errorBars,
         errorColor: 'rgba('+ colorFunc(i).join(', ') + ', 1)',
         fill: false,
-        tension: 0.3,
-        radius: 5,
+        tension: 0.2,
+        radius: 10,
         pointStyle: selectPointStyle(i),
-        borderWidth:3,
+        borderWidth:2,
         borderColor: [
             'rgba('+ colorFunc(i).join(', ') + ', 1)',
             
@@ -36,7 +51,7 @@ function createGraph(elemId, title, params, colorFunc) {
     })
     ctx = document.getElementById(elemId).getContext('2d');
     window.myScatter = new Chart(ctx, {
-      type: 'lineError',
+      type: 'line',
       data: {
         labels: labels,
         datasets: dataSets
@@ -49,11 +64,17 @@ function createGraph(elemId, title, params, colorFunc) {
         legend: {
           display: true,       
           labels: {
+            usePointStyle: true
           }
         },    
         layout: {
-          padding: 50
-        },    
+          padding:  {
+            left: 0,
+            right: 0,
+            top: 200,
+            bottom: 0
+          }
+        },
         scales: {
           xAxes: [{
             scaleLabel: {
@@ -65,6 +86,10 @@ function createGraph(elemId, title, params, colorFunc) {
             scaleLabel: {
               display: true,
               labelString: params.y.label
+            },
+            ticks: {
+              suggestedMin: 0,
+              suggestedMax: maxVal
             }
           }]
         }
