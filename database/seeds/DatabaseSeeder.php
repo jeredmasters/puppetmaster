@@ -30,10 +30,10 @@ class DatabaseSeeder extends Seeder
     $default = [
       "population" => 100,
       "generations" => 100,     
-      "selection_pressure" => 2,
+      "selection_pressure" => 3,
       "duration" => 15000,
-      "crossover_rate" => 6,
-      "mutation_rate" => 4,
+      "crossover_rate" => 2,
+      "mutation_rate" => 1,
       "mutation_variance" => 0,
       "duration_variance" => 0,
       "steepest_descent" => 1,
@@ -114,15 +114,15 @@ class DatabaseSeeder extends Seeder
       }
     }
     foreach([1, 2, 3, 4] as $selection_pressure){
-        for ($gens = 20; $gens <= 200; $gens += 20) {
-          $t = [
-            "steepest_descent" => 0,
-            "generations" => $gens,     
-            "selection_pressure" => $selection_pressure
-          ];
-          Test::findOrCreate($this->parameters($t), true);
-        }
+      for ($gens = 20; $gens <= 200; $gens += 20) {
+        $t = [
+          "steepest_descent" => 0,
+          "generations" => $gens,     
+          "selection_pressure" => $selection_pressure
+        ];
+        Test::findOrCreate($this->parameters($t), true);
       }
+    }
   }
   
   private function durationVariance(){
