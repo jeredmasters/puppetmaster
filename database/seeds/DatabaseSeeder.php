@@ -30,10 +30,10 @@ class DatabaseSeeder extends Seeder
     $default = [
       "population" => 100,
       "generations" => 100,     
-      "selection_pressure" => 3,
+      "selection_pressure" => 2,
       "duration" => 15000,
-      "crossover_rate" => 2,
-      "mutation_rate" => 1,
+      "crossover_rate" => 6,
+      "mutation_rate" => 4,
       "mutation_variance" => 0,
       "duration_variance" => 0,
       "steepest_descent" => 1,
@@ -153,6 +153,17 @@ class DatabaseSeeder extends Seeder
     foreach([0, 1, 2, 3, 4, 5, 6] as $mutation_rate){
       for ($gens = 20; $gens <= 200; $gens += 20) {
         $t = [
+          "steepest_descent" => 1,
+          "generations" => $gens,
+          "mutation_rate" => $mutation_rate
+        ];
+        Test::findOrCreate($this->parameters($t), true);
+      }
+    }
+    foreach([0, 1, 2, 3, 4, 5, 6] as $mutation_rate){
+      for ($gens = 20; $gens <= 200; $gens += 20) {
+        $t = [
+          "steepest_descent" => 0,
           "generations" => $gens,
           "mutation_rate" => $mutation_rate
         ];
