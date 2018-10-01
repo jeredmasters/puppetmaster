@@ -1,16 +1,17 @@
 $(document).ready(function (){
   population();
+  gradientDescent();
   mutationTypeNormal();
   mutationTypeSteepest();
   mutationRateNormal();
   mutationRateSteepest();
-  gradientDescent();
+  crossoverRate();  
   selectionPressureNormal();
   selectionPressureSteepest();
   durationVariance();
+  durationVarianceScaled();
   durationVarianceMillis();
-  crossoverRate();
-
+  
 });
 
 function population(){
@@ -356,6 +357,37 @@ function durationVariance(){
     return [150, Math.floor((255-c) / 2), 255-c]
   }
   createGraph("Duration Variance VS Fitness", params, color)
+}
+function durationVarianceScaled(){
+  var params = {
+    static: {
+      population: 100,
+      selection_pressure: 2,
+      duration: 100 * 150,
+      crossover_rate: 6,
+      mutation_rate: 4,
+      mutation_variance: 0,
+      steepest_descent: 1
+    },
+    sets: [
+      {label: "Off", filter: {duration_variance:0}},
+      {label: "On", filter: {duration_variance:1}},
+    ],
+    x: {
+      label: "Generations",
+      column: 'generations',
+      values: [20,40,60,80,100,120,140,160,180,200,220,240,260,280,300]
+    },
+    y: {
+      label: "Fitness",
+      column: 'scaled_fitness'
+    }    
+  };
+  var color = function (i) {
+    c = i * Math.floor(255 / params.sets.length)
+    return [150, Math.floor((255-c) / 2), 255-c]
+  }
+  createGraph("Duration Variance VS Scaled Fitness", params, color)
 }
 
 
