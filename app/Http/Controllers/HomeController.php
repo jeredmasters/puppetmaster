@@ -32,6 +32,9 @@ class HomeController extends BaseController
   }
 
   public function results(Request $request){
+    $lowest_samples = 999999;
+    $total_samples = 0;
+    $points = 0;
     $parameters = $request->input('parameters');
     
     $results = [];
@@ -39,7 +42,6 @@ class HomeController extends BaseController
     $y_col = 'results.'.$parameters['y']['column'];
     foreach($parameters['sets'] as $set){
       $data = [];
-      $error = [];
       foreach($parameters['x']['values'] as $x){
         $x_col = 'tests.'.$parameters['x']['column'];
         $q = DB::table('results')
@@ -58,21 +60,38 @@ class HomeController extends BaseController
         
 
         $y = $q->avg($y_col);
+        $samples = $q->count($y_col);
+        $total_samples += $samples;
+        if ($samples < $lowest_samples){
+          $lowest_samples = $samples;
+        }
+
 
         $data[] = [
           "x" => $x,
           "y" => floatval($y),
+          "samples" => $samples,
           "stdDev" => $this->stdDev($q->pluck($y_col)->toArray())
         ];
+        $points += 1;
       }
       $results[] = [
         "label" => $set['label'],
-        "data" => $data,
-        "error" => $error
+        "data" => $data
       ];
     }
 
-    return response()->json($results);
+    return response()->json(
+      [
+        'sets' => $results,
+        'meta' => [
+          'points' => $points,
+          'average_samples' => $total_samples / $points,
+          'total_samples' => $total_samples,
+          'lowest_samples' => $lowest_samples 
+        ]
+      ]
+    );
   }
 
   private static function stdDev($a){

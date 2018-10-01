@@ -51,7 +51,7 @@ function population(){
     c = i * Math.floor(255 / params.sets.length)
     return [255 - c, 0, c]
   }
-  createGraph("Populations and Generations", params, color)
+  renderResult("Populations and Generations", params, color)
 }
 
 function mutationTypeNormal(){
@@ -84,7 +84,7 @@ function mutationTypeNormal(){
     c = i * Math.floor(255 / params.sets.length)
     return [100, 255 - c, c]
   }
-  createGraph("Mutation Variance", params, color)
+  renderResult("Mutation Variance", params, color)
 }
 function mutationTypeSteepest(){
   var params = {
@@ -116,7 +116,7 @@ function mutationTypeSteepest(){
     c = i * Math.floor(255 / params.sets.length)
     return [100, 255 - c, c]
   }
-  createGraph("Mutation Variance with Steepest Descent", params, color)
+  renderResult("Mutation Variance with Steepest Descent", params, color)
 }
 
 
@@ -149,7 +149,7 @@ function gradientDescent(){
     c = i * Math.floor(255 / params.sets.length)
     return [c, c, 50]
   }
-  createGraph("Steepest Descent", params, color)
+  renderResult("Steepest Descent", params, color)
 }
 
 function selectionPressureNormal(){
@@ -183,7 +183,7 @@ function selectionPressureNormal(){
     c = i * Math.floor(255 / params.sets.length)
     return [c, Math.floor((255-c) / 2), 255-c]
   }
-  createGraph("Selection Pressure", params, color)
+  renderResult("Selection Pressure", params, color)
 }
 function selectionPressureSteepest(){
   var params = {
@@ -216,7 +216,7 @@ function selectionPressureSteepest(){
     c = i * Math.floor(255 / params.sets.length)
     return [c, Math.floor((255-c) / 2), 255-c]
   }
-  createGraph("Selection Pressure with Steepest Descent", params, color)
+  renderResult("Selection Pressure with Steepest Descent", params, color)
 }
 
 function crossoverRate(){
@@ -253,7 +253,7 @@ function crossoverRate(){
     c = i * Math.floor(255 / params.sets.length)
     return [c, 0, Math.floor(c / 2)]
   }
-  createGraph("Crossover Rate", params, color)
+  renderResult("Crossover Rate", params, color)
 }
 function mutationRateNormal(){
   var params = {
@@ -289,7 +289,7 @@ function mutationRateNormal(){
     c = i * Math.floor(255 / params.sets.length)
     return [c, 0, Math.floor(c / 2)]
   }
-  createGraph("Mutation Rate", params, color)
+  renderResult("Mutation Rate", params, color)
 }
 function mutationRateSteepest(){
   var params = {
@@ -325,7 +325,7 @@ function mutationRateSteepest(){
     c = i * Math.floor(255 / params.sets.length)
     return [c, 0, Math.floor(c / 2)]
   }
-  createGraph("Mutation Rate with Steepest Descent", params, color)
+  renderResult("Mutation Rate with Steepest Descent", params, color)
 }
 function durationVariance(){
   var params = {
@@ -356,7 +356,7 @@ function durationVariance(){
     c = i * Math.floor(255 / params.sets.length)
     return [150, Math.floor((255-c) / 2), 255-c]
   }
-  createGraph("Duration Variance VS Fitness", params, color)
+  renderResult("Duration Variance VS Fitness", params, color)
 }
 function durationVarianceScaled(){
   var params = {
@@ -387,7 +387,7 @@ function durationVarianceScaled(){
     c = i * Math.floor(255 / params.sets.length)
     return [150, Math.floor((255-c) / 2), 255-c]
   }
-  createGraph("Duration Variance VS Scaled Fitness", params, color)
+  renderResult("Duration Variance VS Scaled Fitness", params, color)
 }
 
 
@@ -420,7 +420,7 @@ function durationVarianceMillis(){
     c = i * Math.floor(255 / params.sets.length)
     return [255-c, c, Math.floor((255-c) / 3) + 100]
   }
-  createGraph("Duration Variance VS Runtime", params, color)
+  renderResult("Duration Variance VS Runtime", params, color)
 }
 
 
