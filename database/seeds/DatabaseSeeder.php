@@ -62,6 +62,7 @@ class DatabaseSeeder extends Seeder
     foreach([0, 1, 2] as $mutation_variance){
       for ($gens = 20; $gens <= 200; $gens += 20) {
         $t = [
+          "mutation_rate" => 3,
           "steepest_descent" => 1,
           "generations" => $gens,
           "mutation_variance" => $mutation_variance
@@ -72,6 +73,7 @@ class DatabaseSeeder extends Seeder
     foreach([0, 1, 2] as $mutation_variance){
       for ($gens = 20; $gens <= 200; $gens += 20) {
         $t = [
+          "mutation_rate" => 3,
           "steepest_descent" => 0,
           "generations" => $gens,
           "mutation_variance" => $mutation_variance
