@@ -1,24 +1,27 @@
 $(document).ready(function (){
-  plotCharts();
-  plotMutationType();
+  population();
+  mutationTypeNormal();
+  mutationTypeSteepest();
+  mutationRateNormal();
+  mutationRateSteepest();
   gradientDescent();
   selectionPressure();
   durationVariance();
   durationVarianceMillis();
   crossoverRate();
-  mutationRate();
+
 });
 
-function plotCharts(){
+function population(){
   var params = {
     static: {  
       selection_pressure: 2,
       duration: 100 * 150,
       crossover_rate: 6,
-      //mutation_rate: 4,
-      //mutation_variance: 0,
+      mutation_rate: 4,
+      mutation_variance: 0,
       duration_variance: 0,
-      //steepest_descent: 1
+      steepest_descent: 0
     },
     sets: [
       {label: 20, filter: {population:20}},
@@ -46,10 +49,42 @@ function plotCharts(){
     c = i * Math.floor(255 / params.sets.length)
     return [255 - c, 0, c]
   }
-  createGraph('chart1', "Populations and Generations", params, color)
+  createGraph("Populations and Generations", params, color)
 }
 
-function plotMutationType(){
+function mutationTypeNormal(){
+  var params = {
+    static: {
+      population: 100,   
+      selection_pressure: 2,
+      duration: 100 * 150,
+      crossover_rate: 6,
+      mutation_rate: 4,
+      duration_variance: 0,
+      steepest_descent: 0
+    },
+    sets: [
+      {label: "None", filter: {mutation_variance:0}},
+      {label: "Linear", filter: {mutation_variance:1}},
+      {label: "Bitwise", filter: {mutation_variance:2}},
+    ],
+    x: {
+      label: "Generations",
+      column: 'generations',
+      values: [20,40,60,80,100,120,140,160,180,200]
+    },
+    y: {
+      label: "Fitness",
+      column: 'fitness'
+    }    
+  };
+  var color = function (i) {
+    c = i * Math.floor(255 / params.sets.length)
+    return [100, 255 - c, c]
+  }
+  createGraph("Mutation Variance", params, color)
+}
+function mutationTypeSteepest(){
   var params = {
     static: {
       population: 100,   
@@ -79,7 +114,7 @@ function plotMutationType(){
     c = i * Math.floor(255 / params.sets.length)
     return [100, 255 - c, c]
   }
-  createGraph('chart2', "Mutation Variance", params, color)
+  createGraph("Mutation Variance with Steepest Descent", params, color)
 }
 
 
@@ -112,7 +147,7 @@ function gradientDescent(){
     c = i * Math.floor(255 / params.sets.length)
     return [c, c, 50]
   }
-  createGraph('chart3', "Steepest Descent", params, color)
+  createGraph("Steepest Descent", params, color)
 }
 
 function selectionPressure(){
@@ -146,7 +181,7 @@ function selectionPressure(){
     c = i * Math.floor(255 / params.sets.length)
     return [c, Math.floor((255-c) / 2), 255-c]
   }
-  createGraph('chart4', "Selection Pressure", params, color)
+  createGraph("Selection Pressure", params, color)
 }
 
 function crossoverRate(){
@@ -183,9 +218,45 @@ function crossoverRate(){
     c = i * Math.floor(255 / params.sets.length)
     return [c, 0, Math.floor(c / 2)]
   }
-  createGraph('chart5', "Crossover Rate", params, color)
+  createGraph("Crossover Rate", params, color)
 }
-function mutationRate(){
+function mutationRateNormal(){
+  var params = {
+    static: {
+      selection_pressure: 2,
+      population: 100,
+      duration: 100 * 150,
+      mutation_variance: 0,
+      duration_variance: 0,
+      steepest_descent: 0,
+      crossover_rate: 6
+    },
+    sets: [
+      {label: "0", filter: {mutation_rate:0}},
+      {label: "1", filter: {mutation_rate:1}},
+      {label: "2", filter: {mutation_rate:2}},
+      {label: "3", filter: {mutation_rate:3}},
+      {label: "4", filter: {mutation_rate:4}},
+      {label: "5", filter: {mutation_rate:5}},
+      {label: "6", filter: {mutation_rate:6}}
+    ],
+    x: {
+      label: "Generations",
+      column: 'generations',
+      values: [20,40,60,80,100,120,140,160,180,200]
+    },
+    y: {
+      label: "Fitness",
+      column: 'fitness'
+    }    
+  };
+  var color = function (i) {
+    c = i * Math.floor(255 / params.sets.length)
+    return [c, 0, Math.floor(c / 2)]
+  }
+  createGraph("Mutation Rate", params, color)
+}
+function mutationRateSteepest(){
   var params = {
     static: {
       selection_pressure: 2,
@@ -219,7 +290,7 @@ function mutationRate(){
     c = i * Math.floor(255 / params.sets.length)
     return [c, 0, Math.floor(c / 2)]
   }
-  createGraph('chart6', "Mutation Rate", params, color)
+  createGraph("Mutation Rate with Steepest Descent", params, color)
 }
 function durationVariance(){
   var params = {
@@ -239,7 +310,7 @@ function durationVariance(){
     x: {
       label: "Generations",
       column: 'generations',
-      values: [20,40,60,80,100,120,140,160,180,200]
+      values: [20,40,60,80,100,120,140,160,180,200,220,240,260,280,300]
     },
     y: {
       label: "Fitness",
@@ -250,7 +321,7 @@ function durationVariance(){
     c = i * Math.floor(255 / params.sets.length)
     return [150, Math.floor((255-c) / 2), 255-c]
   }
-  createGraph('chart7', "Duration Variance VS Fitness", params, color)
+  createGraph("Duration Variance VS Fitness", params, color)
 }
 
 
@@ -283,5 +354,7 @@ function durationVarianceMillis(){
     c = i * Math.floor(255 / params.sets.length)
     return [255-c, c, Math.floor((255-c) / 3) + 100]
   }
-  createGraph('chart8', "Duration Variance VS Runtime", params, color)
+  createGraph("Duration Variance VS Runtime", params, color)
 }
+
+

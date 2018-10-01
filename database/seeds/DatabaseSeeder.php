@@ -62,6 +62,17 @@ class DatabaseSeeder extends Seeder
     foreach([0, 1, 2] as $mutation_variance){
       for ($gens = 20; $gens <= 200; $gens += 20) {
         $t = [
+          "steepest_descent" => 1,
+          "generations" => $gens,
+          "mutation_variance" => $mutation_variance
+        ];
+        Test::findOrCreate($this->parameters($t), true);
+      }                
+    }
+    foreach([0, 1, 2] as $mutation_variance){
+      for ($gens = 20; $gens <= 200; $gens += 20) {
+        $t = [
+          "steepest_descent" => 0,
           "generations" => $gens,
           "mutation_variance" => $mutation_variance
         ];
@@ -95,18 +106,29 @@ class DatabaseSeeder extends Seeder
     foreach([1, 2, 3, 4] as $selection_pressure){
       for ($gens = 20; $gens <= 200; $gens += 20) {
         $t = [
+          "steepest_descent" => 1,
           "generations" => $gens,     
           "selection_pressure" => $selection_pressure
         ];
         Test::findOrCreate($this->parameters($t), true);
       }
     }
+    foreach([1, 2, 3, 4] as $selection_pressure){
+        for ($gens = 20; $gens <= 200; $gens += 20) {
+          $t = [
+            "steepest_descent" => 0,
+            "generations" => $gens,     
+            "selection_pressure" => $selection_pressure
+          ];
+          Test::findOrCreate($this->parameters($t), true);
+        }
+      }
   }
   
   private function durationVariance(){
     foreach([0, 1] as $duration_variance){
-      for ($gens = 20; $gens <= 200; $gens += 20) {
-        $t = [
+      for ($gens = 20; $gens <= 300; $gens += 20) {
+        $t = [         
           "generations" => $gens,
           "duration_variance" => $duration_variance
         ];

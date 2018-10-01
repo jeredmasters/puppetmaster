@@ -8,7 +8,7 @@ function selectPointStyle(index){
   ]
   return styles[index % 5];
 }
-function createGraph(elemId, title, params, colorFunc) {
+function createGraph(title, params, colorFunc) {
   $.post("/results/", {parameters: params}, function (response) {
     console.log(response);
     var i = -1;
@@ -49,8 +49,15 @@ function createGraph(elemId, title, params, colorFunc) {
         ],
       }
     })
-    ctx = document.getElementById(elemId).getContext('2d');
-    window.myScatter = new Chart(ctx, {
+
+    var $canvas = $("<canvas width='400' height='300'></canvas>");
+    var $canvas_col = $("<div class='offset-md-1 col-md-10'></div>").append($canvas);
+
+    var $table_div = $("<div></div>");
+    var $table_col = $("<div class='offset-md-2 col-md-8'></div>").append($table_div);
+
+    ctx = $canvas[0].getContext('2d');
+    myScatter = new Chart(ctx, {
       type: 'line',
       data: {
         labels: labels,
@@ -95,11 +102,16 @@ function createGraph(elemId, title, params, colorFunc) {
         }
       }
     });
-    createTable(elemId+"_table", title, labels, dataSets);
+    $table_div.append(
+      createTable(title, labels, dataSets)
+    );
+
+    var $row = $("<div class='row'></div>").append($canvas_col).append($table_col);
+    $("#chartarea").append($row);
   });
 }
 
-function createTable(tableId, title, labels, data){
+function createTable(title, labels, data){
 
   var $table = $('<table>');
   $table.addClass("table table-sm");
@@ -131,6 +143,5 @@ function createTable(tableId, title, labels, data){
       }).join()
     );
   }
-
-  $table.appendTo('#' + tableId);
+  return $table;
 }
