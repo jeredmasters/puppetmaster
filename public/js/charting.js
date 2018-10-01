@@ -10,7 +10,7 @@ function selectPointStyle(index){
 }
 function renderResult(title, params, colorFunc) {
 
-  var $row = $("<div class='row'></div>");
+  var $row = $("<div class='row top-margin'></div>");
   $("#chartarea").append($row);
   $.post("/results/", {parameters: params}, function (response) {
     labels = response.sets[0].data.map(function (point) {return point.x;})
@@ -29,7 +29,7 @@ function renderResult(title, params, colorFunc) {
 
 
 function createHeader(title, meta){
-  return $("<div class='offset-md-2 col-md-8'></div>")
+  return $("<div class='offset-md-1 col-md-10 text-center'></div>")
     .append("<h2>" + title + "</h2>")
     .append("<p>Points: " + meta.points + ", Total Samples: " + meta.total_samples + ", Average Samples: " + meta.average_samples + ", Least Samples: " + meta.lowest_samples + "</p>");
 }
