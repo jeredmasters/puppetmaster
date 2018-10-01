@@ -61,7 +61,7 @@ function mutationTypeNormal(){
       selection_pressure: 2,
       duration: 100 * 150,
       crossover_rate: 6,
-      mutation_rate: 4,
+      mutation_rate: 3,
       duration_variance: 0,
       steepest_descent: 0
     },
@@ -93,7 +93,7 @@ function mutationTypeSteepest(){
       selection_pressure: 2,
       duration: 100 * 150,
       crossover_rate: 6,
-      mutation_rate: 4,
+      mutation_rate: 3,
       duration_variance: 0,
       steepest_descent: 1
     },
