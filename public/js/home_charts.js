@@ -21,7 +21,7 @@ function population(){
       mutation_rate: 4,
       mutation_variance: 0,
       duration_variance: 0,
-      steepest_descent: 0
+      steepest_descent: 1
     },
     sets: [
       {label: 20, filter: {population:20}},
