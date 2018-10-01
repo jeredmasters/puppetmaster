@@ -9,6 +9,8 @@ function selectPointStyle(index){
   return styles[index % 5];
 }
 function createGraph(title, params, colorFunc) {
+  var $row = $("<div class='row'></div>");
+  $("#chartarea").append($row);
   $.post("/results/", {parameters: params}, function (response) {
     console.log(response);
     var i = -1;
@@ -50,7 +52,7 @@ function createGraph(title, params, colorFunc) {
       }
     })
 
-    var $canvas = $("<canvas width='400' height='300'></canvas>");
+    var $canvas = $("<canvas width='400' height='350'></canvas>");
     var $canvas_col = $("<div class='offset-md-1 col-md-10'></div>").append($canvas);
 
     var $table_div = $("<div></div>");
@@ -106,8 +108,8 @@ function createGraph(title, params, colorFunc) {
       createTable(title, labels, dataSets)
     );
 
-    var $row = $("<div class='row'></div>").append($canvas_col).append($table_col);
-    $("#chartarea").append($row);
+    $row.append($canvas_col).append($table_col);
+    
   });
 }
 

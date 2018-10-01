@@ -5,7 +5,8 @@ $(document).ready(function (){
   mutationRateNormal();
   mutationRateSteepest();
   gradientDescent();
-  selectionPressure();
+  selectionPressureNormal();
+  selectionPressureSteepest();
   durationVariance();
   durationVarianceMillis();
   crossoverRate();
@@ -150,7 +151,40 @@ function gradientDescent(){
   createGraph("Steepest Descent", params, color)
 }
 
-function selectionPressure(){
+function selectionPressureNormal(){
+  var params = {
+    static: {
+      population: 100,
+      duration: 100 * 150,
+      crossover_rate: 6,
+      mutation_rate: 4,
+      mutation_variance: 0,
+      duration_variance: 0,
+      steepest_descent: 0
+    },
+    sets: [
+      {label: "1", filter: {selection_pressure:1}},
+      {label: "2", filter: {selection_pressure:2}},
+      {label: "3", filter: {selection_pressure:3}},
+      {label: "4", filter: {selection_pressure:4}},
+    ],
+    x: {
+      label: "Generations",
+      column: 'generations',
+      values: [20,40,60,80,100,120,140,160,180,200]
+    },
+    y: {
+      label: "Fitness",
+      column: 'fitness'
+    }    
+  };
+  var color = function (i) {
+    c = i * Math.floor(255 / params.sets.length)
+    return [c, Math.floor((255-c) / 2), 255-c]
+  }
+  createGraph("Selection Pressure", params, color)
+}
+function selectionPressureSteepest(){
   var params = {
     static: {
       population: 100,
@@ -181,7 +215,7 @@ function selectionPressure(){
     c = i * Math.floor(255 / params.sets.length)
     return [c, Math.floor((255-c) / 2), 255-c]
   }
-  createGraph("Selection Pressure", params, color)
+  createGraph("Selection Pressure with Steepest Descent", params, color)
 }
 
 function crossoverRate(){
@@ -343,7 +377,7 @@ function durationVarianceMillis(){
     x: {
       label: "Generations",
       column: 'generations',
-      values: [20,40,60,80,100,120,140,160,180,200]
+      values: [20,40,60,80,100,120,140,160,180,200,220,240,260,280,300]
     },
     y: {
       label: "Duration",
