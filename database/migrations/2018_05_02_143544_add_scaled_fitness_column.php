@@ -36,6 +36,15 @@ class AddScaledFitnessColumn extends Migration
     {
       Schema::table('results', function (Blueprint $table) {
         $table->dropColumn('scaled_fitness');
+        $table->dropIndex('status');
+        $table->dropIndex('millis');
+        $table->dropIndex('scaled_millis');
+      });
+      Schema::table('benchmarks', function (Blueprint $table) {
+        $table->dropIndex('host_id');
+      });
+      Schema::table('hosts', function (Blueprint $table) {
+        $table->dropIndex('token');
       });
     }
 }

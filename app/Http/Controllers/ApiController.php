@@ -73,6 +73,7 @@ class ApiController extends BaseController
       ->groupBy('tests.id')
       ->orderByRaw('2 asc')
       ->where('tests.active', true)
+      ->where('tests.unstable', false)
       ->first();
 
     if ($min_test != null){

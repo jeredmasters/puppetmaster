@@ -46,7 +46,9 @@ class Recount extends Command
 
       DB::table('tests')
         ->update(['assignments' => DB::raw('(select count(results.id) from results where tests.id = results.test_id)')]);   
-        
+      
+      DB::table('tests')
+        ->update(['unstable' => DB::raw('(select count(results.id) >= 5 AND MAX(results.fitness) = -1 from results where tests.id = results.test_id)')]);   
         
       DB::table('results')
         ->whereRaw('(select count(id) from benchmarks where benchmarks.host_id = results.host_id) > 0')
@@ -56,7 +58,6 @@ class Recount extends Command
       DB::table('results')
         ->whereRaw('scaled_millis IS NOT NULL')
         ->whereRaw('scaled_millis > 0')
-        ->update(['scaled_fitness' => DB::raw('results.fitness / results.scaled_millis')]);
-        
+        ->update(['scaled_fitness' => DB::raw('results.fitness / results.scaled_millis')]);        
     }
 }
