@@ -346,41 +346,17 @@ class Analysis
           'crossover_rate' => 6,
           'mutation_rate' => 4,
           'mutation_variance' => 0,
-          'duration_variance' => 0,
-          'steepest_descent' => 0
+          'duration_variance' => 0
         ],
         'sets' => [
-          ['label' => '1', 'filter' => ['selection_pressure' => 1]],
-          ['label' => '2', 'filter' => ['selection_pressure' => 2]],
-          ['label' => '3', 'filter' => ['selection_pressure' => 3]],
-          ['label' => '4', 'filter' => ['selection_pressure' => 4]],
-        ],
-        'x' => [
-          'label' => 'Generations',
-          'column' => 'generations',
-          'values' => [20,40,60,80,100,120,140,160,180,200]
-        ],
-        'y' => [
-          'label' => 'Fitness',
-          'column' => 'fitness'
-        ]    
-      ],
-      [
-        'title' => 'Selection Pressure with Steepest Descent',
-        'static' => [
-          'population' => 100,
-          'duration' => 100 * 150,
-          'crossover_rate' => 6,
-          'mutation_rate' => 4,
-          'mutation_variance' => 0,
-          'duration_variance' => 0,
-          'steepest_descent' => 1
-        ],
-        'sets' => [
-          ['label' => '1', 'filter' => ['selection_pressure' => 1]],
-          ['label' => '2', 'filter' => ['selection_pressure' => 2]],
-          ['label' => '3', 'filter' => ['selection_pressure' => 3]],
-          ['label' => '4', 'filter' => ['selection_pressure' => 4]],
+          ['label' => '1', 'filter' => ['selection_pressure' => 1, 'steepest_descent' => 0]],
+          ['label' => '2', 'filter' => ['selection_pressure' => 2, 'steepest_descent' => 0]],
+          ['label' => '3', 'filter' => ['selection_pressure' => 3, 'steepest_descent' => 0]],
+          ['label' => '4', 'filter' => ['selection_pressure' => 4, 'steepest_descent' => 0]],
+          ['label' => '1', 'filter' => ['selection_pressure' => 1, 'steepest_descent' => 1], 'style' => 'dashed'],
+          ['label' => '2', 'filter' => ['selection_pressure' => 2, 'steepest_descent' => 1], 'style' => 'dashed'],
+          ['label' => '3', 'filter' => ['selection_pressure' => 3, 'steepest_descent' => 1], 'style' => 'dashed'],
+          ['label' => '4', 'filter' => ['selection_pressure' => 4, 'steepest_descent' => 1], 'style' => 'dashed'],
         ],
         'x' => [
           'label' => 'Generations',
@@ -446,32 +422,7 @@ class Analysis
           'label' => 'Fitness',
           'column' => 'fitness'
         ]    
-      ],
-      [
-        'title' => 'Duration Variance VS Scaled Fitness',
-        'static' => [
-          'population' => 100,
-          'selection_pressure' => 2,
-          'duration' => 100 * 150,
-          'crossover_rate' => 6,
-          'mutation_rate' => 4,
-          'mutation_variance' => 0,
-          'steepest_descent' => 1
-        ],
-        'sets' => [
-          ['label' => 'Off', 'filter' => ['duration_variance' => 0]],
-          ['label' => 'On', 'filter' => ['duration_variance' => 1]],
-        ],
-        'x' => [
-          'label' => 'Generations',
-          'column' => 'generations',
-          'values' => [20,40,60,80,100,120,140,160,180,200,220,240,260,280,300]
-        ],
-        'y' => [
-          'label' => 'Fitness',
-          'column' => 'scaled_fitness'
-        ]    
-      ],
+      ],      
       [
         'title' => 'Duration Variance VS Runtime',
         'static' => [
@@ -496,7 +447,32 @@ class Analysis
           'label' => 'Duration',
           'column' => 'scaled_millis'
         ]    
-      ]
+        ],
+        [
+          'title' => 'Duration Variance VS Scaled Fitness',
+          'static' => [
+            'population' => 100,
+            'selection_pressure' => 2,
+            'duration' => 100 * 150,
+            'crossover_rate' => 6,
+            'mutation_rate' => 4,
+            'mutation_variance' => 0,
+            'steepest_descent' => 1
+          ],
+          'sets' => [
+            ['label' => 'Off', 'filter' => ['duration_variance' => 0]],
+            ['label' => 'On', 'filter' => ['duration_variance' => 1]],
+          ],
+          'x' => [
+            'label' => 'Generations',
+            'column' => 'generations',
+            'values' => [20,40,60,80,100,120,140,160,180,200,220,240,260,280,300]
+          ],
+          'y' => [
+            'label' => 'Fitness',
+            'column' => 'scaled_fitness'
+          ]    
+        ]
     ];
   }
 }
