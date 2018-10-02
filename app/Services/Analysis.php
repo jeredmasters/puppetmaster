@@ -259,60 +259,7 @@ class Analysis
           'label' => 'Fitness',
           'column' => 'fitness'
         ]    
-      ],
-      [
-        'title' => 'Mutation Variance',
-        'static' => [
-          'population' => 100,   
-          'selection_pressure' => 2,
-          'duration' => 100 * 150,
-          'crossover_rate' => 6,
-          'mutation_rate' => 3,
-          'duration_variance' => 0,
-          'steepest_descent' => 0
-        ],
-        'sets' => [
-          ['label' => 'None', 'filter' => ['mutation_variance' => 0]],
-          ['label' => 'Linear', 'filter' => ['mutation_variance' => 1]],
-          ['label' => 'Bitwise', 'filter' => ['mutation_variance' => 2]],
-        ],
-        'x' => [
-          'label' => 'Generations',
-          'column' => 'generations',
-          'values' => [20,40,60,80,100,120,140,160,180,200]
-        ],
-        'y' => [
-          'label' => 'Fitness',
-          'column' => 'fitness'
-        ]    
-      ],
-      [
-        'title' => 'Mutation Variance with Steepest Descent',
-        'static' => [
-          'population' => 100,   
-          'selection_pressure' => 2,
-          'duration' => 100 * 150,
-          'crossover_rate' => 6,
-          'mutation_rate' => 3,
-          'duration_variance' => 0,
-          'steepest_descent' => 1
-        ],
-        'sets' => [
-          ['label' => 'None', 'filter' => ['mutation_variance' => 0]],
-          ['label' => 'Linear', 'filter' => ['mutation_variance' => 1]],
-          ['label' => 'Bitwise', 'filter' => ['mutation_variance' => 2]],
-        ],
-        'x' => [
-          'label' => 'Generations',
-          'column' => 'generations',
-          'values' => [20,40,60,80,100,120,140,160,180,200]
-        ],
-        'y' => [
-          'label' => 'Fitness',
-          'column' => 'fitness'
-        ]    
-      ],
-      
+      ],      
       [
         'title' => 'Steepest Descent',
         'static' => [
