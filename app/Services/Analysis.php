@@ -63,7 +63,7 @@ class Analysis
       $q = DB::table('results')
         ->join('tests', 'tests.id', '=', 'results.test_id')
         ->where($x_col, '=', $x)
-        ->where('fitness', '!=', -1)
+      //  ->where('fitness', '!=', -1)
         ->where('tests.active', true);
       foreach($static as $key => $value){
         $q->where($key, $value);
@@ -275,10 +275,10 @@ class Analysis
           ['label' => '2', 'filter' => ['selection_pressure' => 2, 'steepest_descent' => 0]],
           ['label' => '3', 'filter' => ['selection_pressure' => 3, 'steepest_descent' => 0]],
           ['label' => '4', 'filter' => ['selection_pressure' => 4, 'steepest_descent' => 0]],
-          ['label' => '1', 'filter' => ['selection_pressure' => 1, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '2', 'filter' => ['selection_pressure' => 2, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '3', 'filter' => ['selection_pressure' => 3, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '4', 'filter' => ['selection_pressure' => 4, 'steepest_descent' => 1], 'style' => 'dashed'],
+          ['label' => '1 SD', 'filter' => ['selection_pressure' => 1, 'steepest_descent' => 1], 'style' => 'dashed'],
+          ['label' => '2 SD', 'filter' => ['selection_pressure' => 2, 'steepest_descent' => 1], 'style' => 'dashed'],
+          ['label' => '3 SD', 'filter' => ['selection_pressure' => 3, 'steepest_descent' => 1], 'style' => 'dashed'],
+          ['label' => '4 SD', 'filter' => ['selection_pressure' => 4, 'steepest_descent' => 1], 'style' => 'dashed'],
         ],
         'x' => [
           'label' => 'Generations',
