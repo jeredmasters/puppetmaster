@@ -8,22 +8,27 @@ function selectPointStyle(index){
   ]
   return styles[index % 5];
 }
-function renderResult(title, params, colorFunc) {
-
+function renderResult(analysis) {
+  var colorFunc = function (i) {
+    c = i * Math.floor(255 / analysis.sets.length)
+    return [255 - c, 0, c]
+  }
+  
   var $row = $("<div class='row top-margin'></div>");
   $("#chartarea").append($row);
-  $.post("/results/", {parameters: params}, function (response) {
-    labels = response.sets[0].data.map(function (point) {return point.x;})
-    var $canvas = $("<canvas width='400' height='250'></canvas>");
 
-    $row
-      .append(createHeader(title, response.meta))
-      .append($("<div class='offset-md-1 col-md-10'></div>").append($canvas))
-      .append(createTable(title, labels, response.sets));
 
-    // must pass in a bound canvas object for chartjs to work
-    createGraph($canvas, title, params, colorFunc, labels, response.sets);
-  });
+  labels = analysis.sets[0].data.map(function (point) {return point.x;})
+  var $canvas = $("<canvas width='400' height='250'></canvas>");
+
+  $row
+    .append(createHeader(analysis.title, analysis.meta))
+    .append($("<div class='offset-md-1 col-md-10'></div>").append($canvas))
+    .append(createTable(analysis.title, labels, analysis.sets));
+
+  // must pass in a bound canvas object for chartjs to work
+  createGraph($canvas, analysis, colorFunc, labels, analysis.sets);
+
 
 }
 
@@ -31,11 +36,11 @@ function renderResult(title, params, colorFunc) {
 function createHeader(title, meta){
   return $("<div class='offset-md-1 col-md-10 text-center'></div>")
     .append("<h2>" + title + "</h2>")
-    .append("<p>Points: " + meta.points + ", Total Samples: " + meta.total_samples + ", Average Samples: " + meta.average_samples + ", Least Samples: " + meta.lowest_samples + "</p>");
+    .append("<p>Total Points: " + meta.total_points + ", Total Samples: " + meta.total_samples + ", Average Samples: " + meta.average_samples + ", Least Samples: " + meta.lowest_samples + "</p>");
 }
 
 
-function createGraph($canvas, title, params, colorFunc, labels, sets) {
+function createGraph($canvas, params, colorFunc, labels, sets) {
   
   var color_index = -1;
   
@@ -54,7 +59,7 @@ function createGraph($canvas, title, params, colorFunc, labels, sets) {
         maxVal = point.y+point.stdDev;
       }
       
-    })
+    });
     return {
       label: set.label,
       data: set.data.map(function (point) {return point.y;}),
@@ -70,6 +75,7 @@ function createGraph($canvas, title, params, colorFunc, labels, sets) {
           'rgba('+ colorFunc(color_index).join(', ') + ', 1)',
           
       ],
+      borderDash: (set.style === 'dashed' ? [5, 5] : [])
     }
   })
 
@@ -85,7 +91,7 @@ function createGraph($canvas, title, params, colorFunc, labels, sets) {
     options: {
       title: {
         display: true,
-        text: title
+        text: params.title
       },
       legend: {
         display: true,       
