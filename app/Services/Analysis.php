@@ -259,31 +259,6 @@ class Analysis
           'label' => 'Fitness',
           'column' => 'fitness'
         ]    
-      ],      
-      [
-        'title' => 'Steepest Descent',
-        'static' => [
-          'population' => 100,    
-          'selection_pressure' => 2,
-          'duration' => 100 * 150,      
-          'mutation_variance' => 0,
-          'duration_variance' => 0
-        ],
-        'sets' => [
-          ['label' => 'Off MR=4', 'filter' => ['steepest_descent' => 0, 'mutation_rate' => 4, 'crossover_rate' => 6]],
-          ['label' => 'On  MR=4', 'filter' => ['steepest_descent' => 1, 'mutation_rate' => 4, 'crossover_rate' => 6]],
-          ['label' => 'Off MR=1', 'filter' => ['steepest_descent' => 0, 'mutation_rate' => 1, 'crossover_rate' => 0]],
-          ['label' => 'On  MR=1', 'filter' => ['steepest_descent' => 1, 'mutation_rate' => 1, 'crossover_rate' => 0]],
-        ],
-        'x' => [
-          'label' => 'Generations',
-          'column' => 'generations',
-          'values' => [20,40,60,80,100,120,140,160,180,200]
-        ],
-        'y' => [
-          'label' => 'Fitness',
-          'column' => 'fitness'
-        ]    
       ],
       [
         'title' => 'Selection Pressure',
