@@ -63,6 +63,7 @@ class Analysis
       $q = DB::table('results')
         ->join('tests', 'tests.id', '=', 'results.test_id')
         ->where($x_col, '=', $x)
+        ->where('results.status', 'complete')
       //  ->where('fitness', '!=', -1)
         ->where('tests.active', true);
       foreach($static as $key => $value){
