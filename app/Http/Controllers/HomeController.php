@@ -28,10 +28,9 @@ class HomeController extends BaseController
     }
 
     $hosts = DB::table('results')
-      ->select('host_id')
       ->where('created_at', '>', Carbon::now()->addMinute(-10))
-      ->distinct()
-      ->count();
+      ->distinct('host_id')
+      ->count('host_id');
 
     $rate = DB::table('results')
       ->where('created_at', '>', Carbon::now()->addMinute(-10))
