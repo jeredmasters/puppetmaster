@@ -26,6 +26,8 @@
     <h1>GA Distributed Testing</h1>
     <h2>Test Case Coverage</h2>
     <p><strong>{{ $results }} / {{ $tests }} = {{ $ratio }}</strong></p>
+    <p>Hosts: {{ $hosts }} (last 10 min)</p>
+    <p>Rate: {{ $rate }} (last 10 min)</p>
     <h2>General Results</h2>
     <div class="container" id="chartarea">
 

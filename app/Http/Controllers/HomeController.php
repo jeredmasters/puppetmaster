@@ -20,8 +20,6 @@ class HomeController extends BaseController
     $results = DB::table('results')
       ->join('tests', 'tests.id', '=', 'results.test_id')
       ->where('tests.active', true)
-      ->inRandomOrder()            
-      ->limit(1000)
       ->count();
     $ratio = 0;
 
@@ -29,7 +27,17 @@ class HomeController extends BaseController
       $ratio = ($results / $tests);
     }
 
-    return view("index", ['tests' => $tests, 'results' => $results, 'ratio' => $ratio]);
+    $hosts = DB::table('results')
+      ->select('host_id')
+      ->where('created_at', '>', Carbon::now()->addMinute(-10))
+      ->distinct()
+      ->count();
+
+    $rate = DB::table('results')
+      ->where('created_at', '>', Carbon::now()->addMinute(-10))
+      ->count();
+
+    return view("index", ['tests' => $tests, 'results' => $results, 'ratio' => $ratio, 'hosts' => $hosts, 'rate' => $rate ]);
   }
 
   public function analyses(Request $request){
