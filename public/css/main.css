@@ -8,6 +8,18 @@
 #chartarea{
   padding-bottom:200px;
 }
-.top-margin{
+.top-margin-xs{
+  margin-top: 25px;
+}
+.top-margin-sm{
+  margin-top: 50px;
+}
+.top-margin-md{
+  margin-top: 100px;
+}
+.top-margin-lg{
   margin-top: 200px;
+}
+.top-margin-xl{
+  margin-top: 400px;
 }

@@ -36,7 +36,7 @@ class HomeController extends BaseController
       ->where('created_at', '>', Carbon::now()->addMinute(-20))
       ->count();
 
-    return view("index", ['tests' => $tests, 'results' => $results, 'ratio' => $ratio, 'hosts' => $hosts, 'rate' => $rate ]);
+    return view("index", ['tests' => $tests, 'results' => $results, 'ratio' => $ratio, 'hosts' => $hosts, 'rate' => $rate / 20 ]);
   }
 
   public function analyses(Request $request){

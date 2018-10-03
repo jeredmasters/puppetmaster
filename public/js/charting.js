@@ -14,7 +14,7 @@ function renderResult(analysis) {
     return [255 - c, 0, c]
   }
   
-  var $row = $("<div class='row top-margin'></div>");
+  var $row = $("<div class='row top-margin-lg'></div>");
   $("#chartarea").append($row);
 
 
