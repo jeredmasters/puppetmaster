@@ -28,12 +28,12 @@ class HomeController extends BaseController
     }
 
     $hosts = DB::table('results')
-      ->where('created_at', '>', Carbon::now()->addMinute(-10))
+      ->where('created_at', '>', Carbon::now()->addMinute(-20))
       ->distinct('host_id')
       ->count('host_id');
 
     $rate = DB::table('results')
-      ->where('created_at', '>', Carbon::now()->addMinute(-10))
+      ->where('created_at', '>', Carbon::now()->addMinute(-20))
       ->count();
 
     return view("index", ['tests' => $tests, 'results' => $results, 'ratio' => $ratio, 'hosts' => $hosts, 'rate' => $rate ]);
