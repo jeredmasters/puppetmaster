@@ -53,13 +53,13 @@ class Recount extends Command
       DB::table('results')
         ->whereRaw('(select count(id) from benchmarks where benchmarks.host_id = results.host_id) > 0')
         ->whereRaw('millis IS NOT NULL')
-        ->whereRaw('scaled_millis IS NULL')
+        ->where('scaled_millis', 0)
         ->update(['scaled_millis' => DB::raw('results.millis / (select avg(millis) from benchmarks where benchmarks.host_id = results.host_id)')]);
 
       DB::table('results')
         ->whereRaw('scaled_millis IS NOT NULL')
         ->whereRaw('scaled_millis > 0')
-        ->whereRaw('scaled_fitness IS NULL')
+        ->where('scaled_fitness', 0)
         ->update(['scaled_fitness' => DB::raw('results.fitness / results.scaled_millis')]);        
     }
 }
