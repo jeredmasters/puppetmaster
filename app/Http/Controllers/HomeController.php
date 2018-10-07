@@ -28,15 +28,15 @@ class HomeController extends BaseController
     }
 
     $hosts = DB::table('results')
-      ->where('created_at', '>', Carbon::now()->addMinute(-20))
+      ->where('created_at', '>', Carbon::now()->addMinute(-30))
       ->distinct('host_id')
       ->count('host_id');
 
     $rate = DB::table('results')
-      ->where('created_at', '>', Carbon::now()->addMinute(-20))
+      ->where('created_at', '>', Carbon::now()->addMinute(-30))
       ->count();
 
-    return view("index", ['tests' => $tests, 'results' => $results, 'ratio' => $ratio, 'hosts' => $hosts, 'rate' => $rate / 20 ]);
+    return view("index", ['tests' => $tests, 'results' => $results, 'ratio' => $ratio, 'hosts' => $hosts, 'rate' => $rate / 30 ]);
   }
 
   public function analyses(Request $request){
