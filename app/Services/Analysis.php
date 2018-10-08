@@ -110,12 +110,12 @@ class Analysis
         return 0;
     }
     $mean = array_sum($a) / $n;
-    $carry = 0.0;
+    $sum = 0.0;
     foreach ($a as $val) {
         $d = ((double) $val) - $mean;
-        $carry += $d * $d;
+        $sum += $d * $d;
     };
-    return sqrt($carry / $n);
+    return sqrt($sum / $n);
   }
 
   public static function Analyses(){

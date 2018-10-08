@@ -19,7 +19,7 @@ function renderResult(analysis) {
 
 
   labels = analysis.sets[0].data.map(function (point) {return point.x;})
-  var $canvas = $("<canvas width='400' height='250'></canvas>");
+  var $canvas = $("<canvas width='400' height='300'></canvas>");
 
   $row
     .append(createHeader(analysis.title, analysis.meta))
