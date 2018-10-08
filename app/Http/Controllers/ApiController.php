@@ -71,7 +71,7 @@ class ApiController extends BaseController
       ->leftJoin('results', 'tests.id', '=', 'results.test_id')
       ->select('tests.id', DB::raw('count(results.id)'))
       ->groupBy('tests.id')
-      ->orderByRaw('2 asc')
+      ->orderByRaw('2 asc, RAND()')
       ->where('tests.active', true)
       ->where('tests.unstable', false)
       ->first();
