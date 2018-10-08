@@ -10,8 +10,25 @@ function selectPointStyle(index){
 }
 function renderResult(analysis) {
   var colorFunc = function (i) {
-    c = i * Math.floor(255 / analysis.sets.length)
-    return [255 - c, 0, c]
+    var c = i * Math.floor(255 / analysis.sets.length)
+
+
+    var r = 255 - c * 2;
+    var g = 200-Math.abs(c - 127) * 2;
+    var b = (c - 127) * 2;
+
+    if (r < 0){
+      r = 0;
+    }
+    if (g < 0){
+      g = 0;
+    }
+    if (b < 0){
+      b = 0;
+    }
+
+    
+    return [r,g,b]
   }
   
   var $row = $("<div class='row top-margin-lg'></div>");
