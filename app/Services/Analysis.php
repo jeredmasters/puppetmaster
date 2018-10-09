@@ -323,8 +323,7 @@ class Analysis
           'duration' => 100 * 150,
           'mutation_rate' => 4,
           'mutation_variance' => 0,
-          'duration_variance' => 0,
-          'steepest_descent' => 1
+          'duration_variance' => 0
         ],
         'sets' => [
           ['label' => '0', 'filter' => ['crossover_rate' => 0, 'steepest_descent' => 0]],
