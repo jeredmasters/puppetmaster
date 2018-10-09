@@ -391,8 +391,8 @@ class Analysis
         'sets' => [
           ['label' => 'Off', 'filter' => ['duration_variance' => 0, 'steepest_descent' => 0]],
           ['label' => 'On', 'filter' => ['duration_variance' => 1, 'steepest_descent' => 0]],
-          ['label' => 'Off SD', 'filter' => ['duration_variance' => 0, 'steepest_descent' => 1]],
-          ['label' => 'On SD', 'filter' => ['duration_variance' => 1, 'steepest_descent' => 1]],
+          ['label' => 'Off SD', 'filter' => ['duration_variance' => 0, 'steepest_descent' => 1], 'style' => 'dashed'],
+          ['label' => 'On SD', 'filter' => ['duration_variance' => 1, 'steepest_descent' => 1], 'style' => 'dashed'],
         ],
         'x' => [
           'label' => 'Generations',
@@ -417,8 +417,8 @@ class Analysis
           'sets' => [
             ['label' => 'Off', 'filter' => ['duration_variance' => 0, 'steepest_descent' => 0]],
             ['label' => 'On', 'filter' => ['duration_variance' => 1, 'steepest_descent' => 0]],
-            ['label' => 'Off SD', 'filter' => ['duration_variance' => 0, 'steepest_descent' => 1]],
-            ['label' => 'On SD', 'filter' => ['duration_variance' => 1, 'steepest_descent' => 1]],
+            ['label' => 'Off SD', 'filter' => ['duration_variance' => 0, 'steepest_descent' => 1], 'style' => 'dashed'],
+            ['label' => 'On SD', 'filter' => ['duration_variance' => 1, 'steepest_descent' => 1], 'style' => 'dashed'],
           ],
           'x' => [
             'label' => 'Generations',

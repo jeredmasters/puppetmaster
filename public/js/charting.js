@@ -14,7 +14,7 @@ function renderResult(analysis) {
 
 
     var r = 255 - c * 2;
-    var g = 200-Math.abs(c - 127) * 2;
+    var g = 255-Math.abs(c - 127) * 2;
     var b = (c - 127) * 2;
 
     if (r < 0){
@@ -28,7 +28,7 @@ function renderResult(analysis) {
     }
 
     
-    return [r,g,b]
+    return [r,b, g];
   }
   
   var $row = $("<div class='row top-margin-lg'></div>");
