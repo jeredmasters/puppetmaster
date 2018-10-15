@@ -120,7 +120,7 @@ class Analysis
 
   public static function Analyses(){
     $mutationSets = [];
-    $mr = [0,1,2,4,6,10,15,20];
+    $mr = [0,1,2,5,10,20];
     foreach($mr as $i){
       $mutationSets[] = ['label' => $i, 'filter' => ['mutation_rate' => $i, 'steepest_descent' => 0]];
     }
@@ -129,7 +129,7 @@ class Analysis
     }
 
     $crossoverSets = [];
-    $cr = [0,1,2,4,6,10];
+    $cr = [0,1,2,5,10];
     foreach($mr as $i){
       $crossoverSets[] = ['label' => $i, 'filter' => ['crossover_rate' => $i, 'steepest_descent' => 0]];
     }
