@@ -119,6 +119,15 @@ class Analysis
   }
 
   public static function Analyses(){
+    $mutationSets = [];
+
+    for($i = 0; $i < 20; $i+=2){
+      $mutationSets[] = ['label' => $i, 'filter' => ['mutation_rate' => $i, 'steepest_descent' => 0]];
+    }
+    for($i = 0; $i < 20; $i+=2){
+      $mutationSets[] = ['label' => "$i SD", 'filter' => ['mutation_rate' => $i, 'steepest_descent' => 1], 'style' => 'dashed'];
+    }
+    
     return [
       [
         'title' => 'Populations and Generations',
@@ -163,30 +172,7 @@ class Analysis
           'duration_variance' => 0,
           'crossover_rate' => 6
         ],
-        'sets' => [
-          ['label' => '0', 'filter' => ['mutation_rate' => 0, 'steepest_descent' => 0]],
-          ['label' => '1', 'filter' => ['mutation_rate' => 1, 'steepest_descent' => 0]],
-          ['label' => '2', 'filter' => ['mutation_rate' => 2, 'steepest_descent' => 0]],
-          ['label' => '3', 'filter' => ['mutation_rate' => 3, 'steepest_descent' => 0]],
-          ['label' => '4', 'filter' => ['mutation_rate' => 4, 'steepest_descent' => 0]],
-          ['label' => '5', 'filter' => ['mutation_rate' => 5, 'steepest_descent' => 0]],
-          ['label' => '6', 'filter' => ['mutation_rate' => 6, 'steepest_descent' => 0]],
-          ['label' => '7', 'filter' => ['mutation_rate' => 7, 'steepest_descent' => 0]],
-          ['label' => '8', 'filter' => ['mutation_rate' => 8, 'steepest_descent' => 0]],
-          ['label' => '9', 'filter' => ['mutation_rate' => 9, 'steepest_descent' => 0]],
-          ['label' => '10', 'filter' => ['mutation_rate' => 10, 'steepest_descent' => 0]],
-          ['label' => '0 SD', 'filter' => ['mutation_rate' => 0, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '1 SD', 'filter' => ['mutation_rate' => 1, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '2 SD', 'filter' => ['mutation_rate' => 2, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '3 SD', 'filter' => ['mutation_rate' => 3, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '4 SD', 'filter' => ['mutation_rate' => 4, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '5 SD', 'filter' => ['mutation_rate' => 5, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '6 SD', 'filter' => ['mutation_rate' => 6, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '7 SD', 'filter' => ['mutation_rate' => 7, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '8 SD', 'filter' => ['mutation_rate' => 8, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '9 SD', 'filter' => ['mutation_rate' => 9, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '10 SD', 'filter' => ['mutation_rate' => 10, 'steepest_descent' => 1], 'style' => 'dashed']
-        ],
+        'sets' => $mutationSets,
         'x' => [
           'label' => 'Generations',
           'column' => 'generations',
@@ -207,30 +193,7 @@ class Analysis
           'duration_variance' => 0,
           'crossover_rate' => 6
         ],
-        'sets' => [
-          ['label' => '0', 'filter' => ['mutation_rate' => 0, 'steepest_descent' => 0]],
-          ['label' => '1', 'filter' => ['mutation_rate' => 1, 'steepest_descent' => 0]],
-          ['label' => '2', 'filter' => ['mutation_rate' => 2, 'steepest_descent' => 0]],
-          ['label' => '3', 'filter' => ['mutation_rate' => 3, 'steepest_descent' => 0]],
-          ['label' => '4', 'filter' => ['mutation_rate' => 4, 'steepest_descent' => 0]],
-          ['label' => '5', 'filter' => ['mutation_rate' => 5, 'steepest_descent' => 0]],
-          ['label' => '6', 'filter' => ['mutation_rate' => 6, 'steepest_descent' => 0]],
-          ['label' => '7', 'filter' => ['mutation_rate' => 7, 'steepest_descent' => 0]],
-          ['label' => '8', 'filter' => ['mutation_rate' => 8, 'steepest_descent' => 0]],
-          ['label' => '9', 'filter' => ['mutation_rate' => 9, 'steepest_descent' => 0]],
-          ['label' => '10', 'filter' => ['mutation_rate' => 10, 'steepest_descent' => 0]],
-          ['label' => '0 SD', 'filter' => ['mutation_rate' => 0, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '1 SD', 'filter' => ['mutation_rate' => 1, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '2 SD', 'filter' => ['mutation_rate' => 2, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '3 SD', 'filter' => ['mutation_rate' => 3, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '4 SD', 'filter' => ['mutation_rate' => 4, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '5 SD', 'filter' => ['mutation_rate' => 5, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '6 SD', 'filter' => ['mutation_rate' => 6, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '7 SD', 'filter' => ['mutation_rate' => 7, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '8 SD', 'filter' => ['mutation_rate' => 8, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '9 SD', 'filter' => ['mutation_rate' => 9, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '10 SD', 'filter' => ['mutation_rate' => 10, 'steepest_descent' => 1], 'style' => 'dashed']
-        ],
+        'sets' => $mutationSets,
         'x' => [
           'label' => 'Generations',
           'column' => 'generations',
@@ -251,30 +214,7 @@ class Analysis
           'duration_variance' => 0,
           'crossover_rate' => 6
         ],
-        'sets' => [
-          ['label' => '0', 'filter' => ['mutation_rate' => 0, 'steepest_descent' => 0]],
-          ['label' => '1', 'filter' => ['mutation_rate' => 1, 'steepest_descent' => 0]],
-          ['label' => '2', 'filter' => ['mutation_rate' => 2, 'steepest_descent' => 0]],
-          ['label' => '3', 'filter' => ['mutation_rate' => 3, 'steepest_descent' => 0]],
-          ['label' => '4', 'filter' => ['mutation_rate' => 4, 'steepest_descent' => 0]],
-          ['label' => '5', 'filter' => ['mutation_rate' => 5, 'steepest_descent' => 0]],
-          ['label' => '6', 'filter' => ['mutation_rate' => 6, 'steepest_descent' => 0]],
-          ['label' => '7', 'filter' => ['mutation_rate' => 7, 'steepest_descent' => 0]],
-          ['label' => '8', 'filter' => ['mutation_rate' => 8, 'steepest_descent' => 0]],
-          ['label' => '9', 'filter' => ['mutation_rate' => 9, 'steepest_descent' => 0]],
-          ['label' => '10', 'filter' => ['mutation_rate' => 10, 'steepest_descent' => 0]],
-          ['label' => '0 SD', 'filter' => ['mutation_rate' => 0, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '1 SD', 'filter' => ['mutation_rate' => 1, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '2 SD', 'filter' => ['mutation_rate' => 2, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '3 SD', 'filter' => ['mutation_rate' => 3, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '4 SD', 'filter' => ['mutation_rate' => 4, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '5 SD', 'filter' => ['mutation_rate' => 5, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '6 SD', 'filter' => ['mutation_rate' => 6, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '7 SD', 'filter' => ['mutation_rate' => 7, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '8 SD', 'filter' => ['mutation_rate' => 8, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '9 SD', 'filter' => ['mutation_rate' => 9, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '10 SD', 'filter' => ['mutation_rate' => 10, 'steepest_descent' => 1], 'style' => 'dashed']
-        ],
+        'sets' => $mutationSets,
         'x' => [
           'label' => 'Generations',
           'column' => 'generations',
