@@ -120,14 +120,39 @@ class Analysis
 
   public static function Analyses(){
     $mutationSets = [];
-
-    for($i = 0; $i < 20; $i+=2){
+    $mr = [0,1,2,4,6,10,15,20];
+    foreach($mr as $i){
       $mutationSets[] = ['label' => $i, 'filter' => ['mutation_rate' => $i, 'steepest_descent' => 0]];
     }
-    for($i = 0; $i < 20; $i+=2){
+    foreach($mr as $i){
       $mutationSets[] = ['label' => "$i SD", 'filter' => ['mutation_rate' => $i, 'steepest_descent' => 1], 'style' => 'dashed'];
     }
-    
+
+    $crossoverSets = [];
+    $cr = [0,1,2,4,6,10];
+    foreach($mr as $i){
+      $crossoverSets[] = ['label' => $i, 'filter' => ['crossover_rate' => $i, 'steepest_descent' => 0]];
+    }
+    foreach($mr as $i){
+      $crossoverSets[] = ['label' => "$i SD", 'filter' => ['crossover_rate' => $i, 'steepest_descent' => 1], 'style' => 'dashed'];
+    }
+
+    $durationSets = [
+      ['label' => 'Off', 'filter' => ['duration_variance' => 0, 'steepest_descent' => 0]],
+      ['label' => 'On', 'filter' => ['duration_variance' => 1, 'steepest_descent' => 0]],
+      ['label' => 'Off SD', 'filter' => ['duration_variance' => 0, 'steepest_descent' => 1], 'style' => 'dashed'],
+      ['label' => 'On SD', 'filter' => ['duration_variance' => 1, 'steepest_descent' => 1], 'style' => 'dashed'],
+    ];
+
+    $durationStatic = [
+      'population' => 100,
+      'selection_pressure' => 2,
+      'duration' => 100 * 150,
+      'crossover_rate' => 6,
+      'mutation_rate' => 4,
+      'mutation_variance' => 0
+    ];
+
     return [
       [
         'title' => 'Populations and Generations',
@@ -142,14 +167,7 @@ class Analysis
         ],
         'sets' => [
           ['label' => 20, 'filter' => ['population' => 20]],
-          ['label' => 40, 'filter' => ['population' => 40]],
-          ['label' => 60, 'filter' => ['population' => 60]],
-          ['label' => 80, 'filter' => ['population' => 80]],
           ['label' => 100, 'filter' => ['population' => 100]],
-          ['label' => 120, 'filter' => ['population' => 120]],
-          ['label' => 140, 'filter' => ['population' => 140]],
-          ['label' => 160, 'filter' => ['population' => 160]],
-          ['label' => 180, 'filter' => ['population' => 180]],
           ['label' => 200, 'filter' => ['population' => 200]]
         ],
         'x' => [
@@ -265,22 +283,7 @@ class Analysis
           'mutation_variance' => 0,
           'duration_variance' => 0
         ],
-        'sets' => [
-          ['label' => '0', 'filter' => ['crossover_rate' => 0, 'steepest_descent' => 0]],
-          ['label' => '1', 'filter' => ['crossover_rate' => 1, 'steepest_descent' => 0]],
-          ['label' => '2', 'filter' => ['crossover_rate' => 2, 'steepest_descent' => 0]],
-          ['label' => '3', 'filter' => ['crossover_rate' => 3, 'steepest_descent' => 0]],
-          ['label' => '4', 'filter' => ['crossover_rate' => 4, 'steepest_descent' => 0]],
-          ['label' => '5', 'filter' => ['crossover_rate' => 5, 'steepest_descent' => 0]],
-          ['label' => '6', 'filter' => ['crossover_rate' => 6, 'steepest_descent' => 0]],
-          ['label' => '0 SD', 'filter' => ['crossover_rate' => 0, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '1 SD', 'filter' => ['crossover_rate' => 1, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '2 SD', 'filter' => ['crossover_rate' => 2, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '3 SD', 'filter' => ['crossover_rate' => 3, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '4 SD', 'filter' => ['crossover_rate' => 4, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '5 SD', 'filter' => ['crossover_rate' => 5, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '6 SD', 'filter' => ['crossover_rate' => 6, 'steepest_descent' => 1], 'style' => 'dashed'],
-        ],
+        'sets' => $crossoverSets,
         'x' => [
           'label' => 'Generations',
           'column' => 'generations',
@@ -293,20 +296,8 @@ class Analysis
       ],      
       [
         'title' => 'Duration Variance VS Fitness',
-        'static' => [
-          'population' => 100,
-          'selection_pressure' => 2,
-          'duration' => 100 * 150,
-          'crossover_rate' => 6,
-          'mutation_rate' => 4,
-          'mutation_variance' => 0
-        ],
-        'sets' => [
-          ['label' => 'Off', 'filter' => ['duration_variance' => 0, 'steepest_descent' => 0]],
-          ['label' => 'On', 'filter' => ['duration_variance' => 1, 'steepest_descent' => 0]],
-          ['label' => 'Off SD', 'filter' => ['duration_variance' => 0, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => 'On SD', 'filter' => ['duration_variance' => 1, 'steepest_descent' => 1], 'style' => 'dashed'],
-        ],
+        'static' => $durationStatic,
+        'sets' => $durationSets,
         'x' => [
           'label' => 'Generations',
           'column' => 'generations',
@@ -319,20 +310,8 @@ class Analysis
       ],      
       [
         'title' => 'Duration Variance VS Runtime',
-        'static' => [
-          'population' => 100,
-          'selection_pressure' => 2,
-          'duration' => 100 * 150,
-          'crossover_rate' => 6,
-          'mutation_rate' => 4,
-          'mutation_variance' => 0
-        ],
-        'sets' => [
-          ['label' => 'Off', 'filter' => ['duration_variance' => 0, 'steepest_descent' => 0]],
-          ['label' => 'On', 'filter' => ['duration_variance' => 1, 'steepest_descent' => 0]],
-          ['label' => 'Off SD', 'filter' => ['duration_variance' => 0, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => 'On SD', 'filter' => ['duration_variance' => 1, 'steepest_descent' => 1], 'style' => 'dashed'],
-        ],
+        'static' => $durationStatic,
+        'sets' => $durationSets,
         'x' => [
           'label' => 'Generations',
           'column' => 'generations',
@@ -345,20 +324,8 @@ class Analysis
         ],
         [
           'title' => 'Duration Variance VS Scaled Fitness',
-          'static' => [
-            'population' => 100,
-            'selection_pressure' => 2,
-            'duration' => 100 * 150,
-            'crossover_rate' => 6,
-            'mutation_rate' => 4,
-            'mutation_variance' => 0
-          ],
-          'sets' => [
-            ['label' => 'Off', 'filter' => ['duration_variance' => 0, 'steepest_descent' => 0]],
-            ['label' => 'On', 'filter' => ['duration_variance' => 1, 'steepest_descent' => 0]],
-            ['label' => 'Off SD', 'filter' => ['duration_variance' => 0, 'steepest_descent' => 1], 'style' => 'dashed'],
-            ['label' => 'On SD', 'filter' => ['duration_variance' => 1, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ],
+          'static' => $durationStatic,
+          'sets' => $durationSets,
           'x' => [
             'label' => 'Generations',
             'column' => 'generations',
