@@ -102,7 +102,7 @@ class Analysis
   
   public static function results($setParams, $xParams, $yParams, $static){
     $least = 999999;
-    $samples = 0;
+    $total_samples = 0;
     $points = 0;
     $max = 0;
     $limit = 0;
@@ -132,7 +132,7 @@ class Analysis
 
       $y = $q->avg($y_col);
       $samples = $q->count($y_col);
-      $samples += $samples;
+      $total_samples += $samples;
       $stdDev = static::stdDev($q->pluck($y_col)->toArray());
       if ($samples < $least){
         $least = $samples;
@@ -161,7 +161,7 @@ class Analysis
       'data' => $data,
       'meta' => [
         'points' => $points,
-        'samples' => $samples,
+        'samples' => $total_samples,
         'least' => $least,
         'max' => $max,
         'min' => $min,
