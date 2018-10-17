@@ -89,7 +89,7 @@ function createGraph($canvas, analysis, labels, graph) {
       errorColor: 'rgba('+ colorFunc(color_index).join(', ') + ', 1)',
       fill: false,
       tension: 0.2,
-      radius: 10,
+      radius: 8,
       pointStyle: selectPointStyle(color_index),
       borderWidth:2,
       borderColor: [
@@ -143,7 +143,7 @@ function createGraph($canvas, analysis, labels, graph) {
         chartJsPluginSubtitle: {
           display:	graph.subtitle !== undefined,
           fontSize:	12,
-          fontFamily:	"'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+          fontFamily:	"Arial",
           fontColor: '#999',
           fontStyle: '',
           text:	graph.subtitle
