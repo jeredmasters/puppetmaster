@@ -9,8 +9,46 @@ function selectPointStyle(index){
   return styles[index % 5];
 }
 function renderResult(analysis) {
+
+  
+  var $row = $("<div class='row top-margin-lg'></div>");
+  $("#chartarea").append($row);
+
+  labels = analysis.graphs[0].sets[0].data.map(function (point) {return point.x;})  
+
+  $row.append(createHeader(analysis.title, analysis.meta));
+
+  var canvasClass = "";
+  switch(analysis.graphs.length){
+    case 1:  canvasClass = "offset-md-1 col-md-10"; break;
+    case 2:  canvasClass = "col-md-6"; break;
+    case 3:  canvasClass = "col-md-4"; break;
+    default: canvasClass = "col-md-6"; break;
+  }
+
+  var allSets = [];
+  for(var graph of analysis.graphs){
+    var $canvas = $("<canvas width='400' height='300'></canvas>");
+    $row.append($("<div class='"+canvasClass+"'></div>").append($canvas));
+    createGraph($canvas, analysis, labels, graph);
+
+    allSets = allSets.concat(graph.sets)
+  }
+  console.log(allSets);    
+  $row.append(createTable(analysis.title, labels, allSets));
+}
+
+
+function createHeader(title, meta){
+  return $("<div class='offset-md-1 col-md-10 text-center'></div>")
+    .append("<h2>" + title + "</h2>")
+    .append("<p>Total Points: " + meta.points + ", Total Samples: " + meta.samples + ", Average Samples: " + meta.samples / meta.points + ", Least Samples: " + meta.least + "</p>");
+}
+
+
+function createGraph($canvas, analysis, labels, graph) {
   var colorFunc = function (i) {
-    var c = i * Math.floor(255 / analysis.sets.length)
+    var c = i * Math.floor(255 / graph.sets.length)
 
 
     var r = 255 - c * 2;
@@ -30,40 +68,10 @@ function renderResult(analysis) {
     
     return [r,b, g];
   }
-  
-  var $row = $("<div class='row top-margin-lg'></div>");
-  $("#chartarea").append($row);
 
-
-  labels = analysis.sets[0].data.map(function (point) {return point.x;})
-  var $canvas = $("<canvas width='400' height='300'></canvas>");
-
-  $row
-    .append(createHeader(analysis.title, analysis.meta))
-    .append($("<div class='offset-md-1 col-md-10'></div>").append($canvas))
-    .append(createTable(analysis.title, labels, analysis.sets));
-
-  // must pass in a bound canvas object for chartjs to work
-  createGraph($canvas, analysis, colorFunc, labels, analysis.sets);
-
-
-}
-
-
-function createHeader(title, meta){
-  return $("<div class='offset-md-1 col-md-10 text-center'></div>")
-    .append("<h2>" + title + "</h2>")
-    .append("<p>Total Points: " + meta.total_points + ", Total Samples: " + meta.total_samples + ", Average Samples: " + meta.average_samples + ", Least Samples: " + meta.lowest_samples + "</p>");
-}
-
-
-function createGraph($canvas, params, colorFunc, labels, sets) {
-  
   var color_index = -1;
-  
-  maxVal = 0;
-  
-  dataSets = sets.map(function (set) {
+    
+  dataSets = graph.sets.map(function (set) {
     color_index += 1;
     errorBars = {};
     set.data.forEach(function (point){
@@ -71,11 +79,7 @@ function createGraph($canvas, params, colorFunc, labels, sets) {
       if (point.y > point.stdDev){
         lowerError = point.stdDev;
       }
-      errorBars[point.x] = {plus: point.stdDev, minus: lowerError}
-      if (point.y+point.stdDev > maxVal){
-        maxVal = point.y+point.stdDev;
-      }
-      
+      errorBars[point.x] = {plus: point.stdDev, minus: lowerError}     
     });
     return {
       label: set.label,
@@ -108,7 +112,8 @@ function createGraph($canvas, params, colorFunc, labels, sets) {
     options: {
       title: {
         display: true,
-        text: params.title
+        text: analysis.title,
+        fontFamily: 'arial'
       },
       legend: {
         display: true,       
@@ -120,23 +125,35 @@ function createGraph($canvas, params, colorFunc, labels, sets) {
         xAxes: [{
           scaleLabel: {
             display: true,
-            labelString: params.x.label
+            labelString: analysis.x.label
           }
         }],
         yAxes: [{
           scaleLabel: {
             display: true,
-            labelString: params.y.label
+            labelString: analysis.y.label
           },
           ticks: {
             suggestedMin: 0,
-            suggestedMax: maxVal
+            suggestedMax: parseFloat(analysis.meta.limit)
           }
         }]
-      }
+      },
+      plugins: {
+        chartJsPluginSubtitle: {
+          display:	graph.subtitle !== undefined,
+          fontSize:	12,
+          fontFamily:	"'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+          fontColor: '#999',
+          fontStyle: '',
+          text:	graph.subtitle
+        },
+        chartJsPluginErrorBars: {
+          lineWidth: 0.5
+        }
+      }     
     }
   });
-
 }
 
 function createTable(title, labels, sets){

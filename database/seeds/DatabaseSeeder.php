@@ -21,11 +21,13 @@ class DatabaseSeeder extends Seeder
     $analyses = Analysis::analyses();
 
     foreach($analyses as $analysis){
-      foreach($analysis['sets'] as $set){
-        $filter = $this->parameters($set['filter'], $analysis['static']);
-        foreach($analysis['x']['values'] as $xVal){
-          $filter[$analysis['x']['column']] = $xVal;
-          Test::findOrCreate($filter, true);
+      foreach($analysis['graphs'] as $graph){
+        foreach($graph['sets'] as $set){
+          $filter = $this->parameters($set['filter'], $analysis['static']);
+          foreach($analysis['x']['values'] as $xVal){
+            $filter[$analysis['x']['column']] = $xVal;
+            Test::findOrCreate($filter, true);
+          }
         }
       }
     }

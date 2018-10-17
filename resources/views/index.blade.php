@@ -13,6 +13,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
         <script src="/js/chartjs.js"></script>
         <script src="/js/errorbars-plugin.js"></script>
+        <script src="/js/subtitle-plugin.js"></script>
         <script src="/js/charting.js"></script>
         <script src="/js/home_charts.js"></script>
 

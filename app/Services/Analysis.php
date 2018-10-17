@@ -23,25 +23,76 @@ class Analysis
     $analyses = Analysis::analyses();
 
     for($a = 0; $a < count($analyses); $a ++){
-      $lowest_samples = 999999;
-      $total_samples = 0;
+      $analysis = $analyses[$a];
+      $total_least = 999999;
+      $samples = 0;
       $total_points = 0;
-      for($s = 0; $s < count($analyses[$a]['sets']); $s++){
-        $results = $this->results($analyses[$a]['sets'][$s], $analyses[$a]['x'], $analyses[$a]['y'], $analyses[$a]['static']);
+      $total_limit = 0;
+      $total_max = 0;      
+      $total_min = 999999;
 
-        $analyses[$a]['sets'][$s]['data'] = $results['data'];
-        $analyses[$a]['sets'][$s]['meta'] = $results['meta'];
-        $total_points += $results['meta']['points'];
-        $total_samples += $results['meta']['total_samples'];
-        if ($results['meta']['lowest_samples'] < $lowest_samples){
-          $lowest_samples = $results['meta']['lowest_samples'];
+      for($g = 0; $g < count($analysis['graphs']); $g++){
+        $analysis = $analyses[$a];
+        $graph_least = 999999;
+        $graph_samples = 0;
+        $graph_points = 0;
+        $graph_limit = 0;
+        $graph_max = 0;        
+        $graph_min = 999999;
+
+
+        $graph = $analysis['graphs'][$g];
+        for($s = 0; $s < count($graph['sets']); $s++){
+          $set = $graph['sets'][$s];
+          $results = $this->results($set, $analysis['x'], $analysis['y'], $analysis['static']);
+
+          $analyses[$a]['graphs'][$g]['sets'][$s]['data'] = $results['data'];
+          $analyses[$a]['graphs'][$g]['sets'][$s]['meta'] = $results['meta'];
+          $graph_points += $results['meta']['points'];
+          $graph_samples += $results['meta']['samples'];
+         
+          if ($results['meta']['least'] < $graph_least){
+            $graph_least = $results['meta']['least'];
+          }            
+          if ($results['meta']['limit'] > $graph_limit){
+            $graph_limit = $results['meta']['limit'];
+          } 
+          if ($results['meta']['max'] > $graph_max){
+            $graph_max = $results['meta']['max'];
+          }
+          if ($results['meta']['min'] < $graph_min){
+            $graph_min = $results['meta']['min'];
+          }       
         }
+        $analyses[$a]['graphs'][$g]['meta'] =  [
+          'points' => $graph_points,
+          'samples' => $graph_samples,
+          'least' => $graph_least,
+          'max' => $graph_max,
+          'min' => $graph_min
+        ];
+        if ($graph_least < $total_least){
+          $total_least = $graph_least;
+        }
+        if ($graph_limit > $total_limit){
+          $total_limit = $graph_limit;
+        }
+        if ($graph_max > $total_max){
+          $total_max = $graph_max;
+        }
+        if ($graph_min < $total_min){
+          $total_min = $graph_min;
+        }
+        $total_points += $graph_points;
+        $samples += $graph_samples;
       }
       $analyses[$a]['meta'] =  [
-        'total_points' => $total_points,
-        'average_samples' => $total_samples / $total_points,
-        'total_samples' => $total_samples,
-        'lowest_samples' => $lowest_samples 
+        'points' => $total_points,
+        'samples' => $samples,
+        'least' => $total_least,
+        'limit' => $total_limit,
+        'max' => $total_max,
+        'min' => $total_min
       ];
     }
 
@@ -50,9 +101,12 @@ class Analysis
 
   
   public static function results($setParams, $xParams, $yParams, $static){
-    $lowest_samples = 999999;
-    $total_samples = 0;
+    $least = 999999;
+    $samples = 0;
     $points = 0;
+    $max = 0;
+    $limit = 0;
+    $min = 999999;
     
     $results = [];
 
@@ -78,9 +132,19 @@ class Analysis
 
       $y = $q->avg($y_col);
       $samples = $q->count($y_col);
-      $total_samples += $samples;
-      if ($samples < $lowest_samples){
-        $lowest_samples = $samples;
+      $samples += $samples;
+      $stdDev = static::stdDev($q->pluck($y_col)->toArray());
+      if ($samples < $least){
+        $least = $samples;
+      }
+      if ($y > $max){
+        $max = $y;
+      }
+      if ($y + $stdDev > $limit){
+        $limit = $y + $stdDev;
+      }
+      if ($y < $min){
+        $min = $y;
       }
 
 
@@ -88,7 +152,7 @@ class Analysis
         "x" => $x,
         "y" => floatval($y),
         "samples" => $samples,
-        "stdDev" => static::stdDev($q->pluck($y_col)->toArray())
+        "stdDev" => $stdDev
       ];
       $points += 1;
     }    
@@ -97,9 +161,11 @@ class Analysis
       'data' => $data,
       'meta' => [
         'points' => $points,
-        'average_samples' => $total_samples / $points,
-        'total_samples' => $total_samples,
-        'lowest_samples' => $lowest_samples 
+        'samples' => $samples,
+        'least' => $least,
+        'max' => $max,
+        'min' => $min,
+        'limit' => $limit
       ]
     ];
   }
@@ -118,30 +184,88 @@ class Analysis
     return sqrt($sum / $n);
   }
 
+  private static function mrSet($mr, $sd){
+    if ($sd){
+      return ['label' => $mr, 'filter' => ['mutation_rate' => $mr, 'steepest_descent' => 1], 'style' => 'dashed'];
+    }
+    else{
+      return ['label' => $mr, 'filter' => ['mutation_rate' => $mr, 'steepest_descent' => 0]];
+    }
+  }
+
+  private static function crSet($cr, $sd){
+    if ($sd){
+      return ['label' => $cr, 'filter' => ['crossover_rate' => $cr, 'steepest_descent' => 1], 'style' => 'dashed'];
+    }
+    else{
+      return ['label' => $cr, 'filter' => ['crossover_rate' => $cr, 'steepest_descent' => 0]];
+    }
+  }
+
   public static function Analyses(){
-    $mutationSets = [];
-    $mr = [0,1,2,5,10,20];
-    foreach($mr as $i){
-      $mutationSets[] = ['label' => $i, 'filter' => ['mutation_rate' => $i, 'steepest_descent' => 0]];
-    }
-    foreach($mr as $i){
-      $mutationSets[] = ['label' => "$i SD", 'filter' => ['mutation_rate' => $i, 'steepest_descent' => 1], 'style' => 'dashed'];
-    }
+    
+    $mutationGraphs = [
+      [
+        'id' => 'q4h56t',
+        'subtitle' => "Normal",
+        'sets' => [static::mrSet(0, false), static::mrSet(1, false), static::mrSet(2, false)]
+      ],
+      [
+        'id' => '3m7wvw',
+        'subtitle' => "Steepest Descent",
+        'sets' => [static::mrSet(0, true), static::mrSet(1, true), static::mrSet(2, true)]
+      ],
+      [
+        'id' => 'm758ei',
+        'subtitle' => "Normal",
+        'sets' => [static::mrSet(5, false), static::mrSet(10, false), static::mrSet(20, false)]
+      ],
+      [
+        'id' => 'z58654',
+        'subtitle' => "Steepest Descent",
+        'sets' => [static::mrSet(5, true), static::mrSet(10, true), static::mrSet(20, true)]
+      ],
+    ];
 
-    $crossoverSets = [];
-    $cr = [0,1,2,5,10];
-    foreach($mr as $i){
-      $crossoverSets[] = ['label' => $i, 'filter' => ['crossover_rate' => $i, 'steepest_descent' => 0]];
-    }
-    foreach($mr as $i){
-      $crossoverSets[] = ['label' => "$i SD", 'filter' => ['crossover_rate' => $i, 'steepest_descent' => 1], 'style' => 'dashed'];
-    }
+    $crossoverGraphs = [
+      [
+        'id' => '45w7nn',
+        'subtitle' => "Normal",
+        'sets' => [static::crSet(0, false), static::crSet(1, false), static::crSet(2, false)]
+      ],
+      [
+        'id' => '9ps5ej',
+        'subtitle' => "Steepest Descent",
+        'sets' => [static::crSet(0, true), static::crSet(1, true), static::crSet(2, true)]
+      ],
+      [
+        'id' => 'ghm68o',
+        'subtitle' => "Normal",
+        'sets' => [static::crSet(5, false), static::crSet(10, false), static::crSet(20, false)]
+      ],
+      [
+        'id' => 'aw59hj',
+        'subtitle' => "Steepest Descent",
+        'sets' => [static::crSet(5, true), static::crSet(10, true), static::crSet(20, true)]
+      ],
+    ];
 
-    $durationSets = [
-      ['label' => 'Off', 'filter' => ['duration_variance' => 0, 'steepest_descent' => 0]],
-      ['label' => 'On', 'filter' => ['duration_variance' => 1, 'steepest_descent' => 0]],
-      ['label' => 'Off SD', 'filter' => ['duration_variance' => 0, 'steepest_descent' => 1], 'style' => 'dashed'],
-      ['label' => 'On SD', 'filter' => ['duration_variance' => 1, 'steepest_descent' => 1], 'style' => 'dashed'],
+    $durationGraphs = [
+      [
+        'id' => 'wn457',
+        'sets' => [
+          ['label' => 'Off', 'filter' => ['duration_variance' => 0, 'steepest_descent' => 0]],
+          ['label' => 'On', 'filter' => ['duration_variance' => 1, 'steepest_descent' => 0]],
+        ]
+      ],
+      [
+        'id' => 'srj66',
+        'subtitle' => "Steepest Descent",
+        'sets' => [
+          ['label' => 'Off', 'filter' => ['duration_variance' => 0, 'steepest_descent' => 1], 'style' => 'dashed'],
+          ['label' => 'On', 'filter' => ['duration_variance' => 1, 'steepest_descent' => 1], 'style' => 'dashed'],
+        ]
+      ]
     ];
 
     $durationStatic = [
@@ -153,8 +277,9 @@ class Analysis
       'mutation_variance' => 0
     ];
 
-    return [
+    return [      
       [
+        'id' => 'popgen',
         'title' => 'Populations and Generations',
         'static' => [  
           'selection_pressure' => 2,
@@ -165,11 +290,16 @@ class Analysis
           'duration_variance' => 0,
           'steepest_descent' => 1
         ],
-        'sets' => [
-          ['label' => 20, 'filter' => ['population' => 20]],
-          ['label' => 100, 'filter' => ['population' => 100]],
-          ['label' => 200, 'filter' => ['population' => 200]]
-        ],
+        'graphs' => [
+          [
+            'id' => '45wb7',
+            'sets' => [
+              ['label' => 20, 'filter' => ['population' => 20]],
+              ['label' => 100, 'filter' => ['population' => 100]],
+              ['label' => 200, 'filter' => ['population' => 200]]
+            ],
+          ]
+        ],        
         'x' => [
           'label' => 'Generations',
           'column' => 'generations',
@@ -181,6 +311,7 @@ class Analysis
         ]  
       ],
       [
+        'id' => 'nanvar',
         'title' => 'No Mutation Variance',
         'static' => [
           'selection_pressure' => 2,
@@ -190,7 +321,7 @@ class Analysis
           'duration_variance' => 0,
           'crossover_rate' => 6
         ],
-        'sets' => $mutationSets,
+        'graphs' => $mutationGraphs,
         'x' => [
           'label' => 'Generations',
           'column' => 'generations',
@@ -202,6 +333,7 @@ class Analysis
         ]    
       ],
       [
+        'id' => 'linvar',
         'title' => 'Linear Mutation Variance',
         'static' => [
           'selection_pressure' => 2,
@@ -211,7 +343,7 @@ class Analysis
           'duration_variance' => 0,
           'crossover_rate' => 6
         ],
-        'sets' => $mutationSets,
+        'graphs' => $mutationGraphs,
         'x' => [
           'label' => 'Generations',
           'column' => 'generations',
@@ -223,6 +355,7 @@ class Analysis
         ]    
       ],
       [
+        'id' => 'bitvar',
         'title' => 'Bitwise Mutation Variance',
         'static' => [
           'selection_pressure' => 2,
@@ -232,7 +365,7 @@ class Analysis
           'duration_variance' => 0,
           'crossover_rate' => 6
         ],
-        'sets' => $mutationSets,
+        'graphs' => $mutationGraphs,
         'x' => [
           'label' => 'Generations',
           'column' => 'generations',
@@ -253,15 +386,39 @@ class Analysis
           'mutation_variance' => 0,
           'duration_variance' => 0
         ],
-        'sets' => [
-          ['label' => '1', 'filter' => ['selection_pressure' => 1, 'steepest_descent' => 0]],
-          ['label' => '2', 'filter' => ['selection_pressure' => 2, 'steepest_descent' => 0]],
-          ['label' => '3', 'filter' => ['selection_pressure' => 3, 'steepest_descent' => 0]],
-          ['label' => '4', 'filter' => ['selection_pressure' => 4, 'steepest_descent' => 0]],
-          ['label' => '1 SD', 'filter' => ['selection_pressure' => 1, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '2 SD', 'filter' => ['selection_pressure' => 2, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '3 SD', 'filter' => ['selection_pressure' => 3, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => '4 SD', 'filter' => ['selection_pressure' => 4, 'steepest_descent' => 1], 'style' => 'dashed'],
+        'graphs' => [
+          [
+            'id' => '45wb7',
+            'subtitle' => "Normal",
+            'sets' => [
+              ['label' => '1', 'filter' => ['selection_pressure' => 1, 'steepest_descent' => 0]],
+              ['label' => '2', 'filter' => ['selection_pressure' => 2, 'steepest_descent' => 0]],
+            ]
+            ],
+          [
+            'id' => 'n584e',
+            'subtitle' => "Steepest Descent",
+            'sets' => [
+              ['label' => '1 SD', 'filter' => ['selection_pressure' => 1, 'steepest_descent' => 1], 'style' => 'dashed'],
+              ['label' => '2 SD', 'filter' => ['selection_pressure' => 2, 'steepest_descent' => 1], 'style' => 'dashed'],
+            ]
+            ],
+          [
+            'id' => 'e56ui',
+            'subtitle' => "Normal",
+            'sets' => [
+              ['label' => '3', 'filter' => ['selection_pressure' => 3, 'steepest_descent' => 0]],
+              ['label' => '4', 'filter' => ['selection_pressure' => 4, 'steepest_descent' => 0]],
+            ]
+            ],
+          [
+            'id' => 'fly42',
+            'subtitle' => "Steepest Descent",
+            'sets' => [
+              ['label' => '3 SD', 'filter' => ['selection_pressure' => 3, 'steepest_descent' => 1], 'style' => 'dashed'],
+              ['label' => '4 SD', 'filter' => ['selection_pressure' => 4, 'steepest_descent' => 1], 'style' => 'dashed'],
+            ]
+          ]
         ],
         'x' => [
           'label' => 'Generations',
@@ -274,6 +431,7 @@ class Analysis
         ]    
       ],
       [
+        'id' => 'crsovr',
         'title' => 'Crossover Rate',
         'static' => [
           'selection_pressure' => 2,
@@ -283,7 +441,7 @@ class Analysis
           'mutation_variance' => 0,
           'duration_variance' => 0
         ],
-        'sets' => $crossoverSets,
+        'graphs' => $crossoverGraphs,
         'x' => [
           'label' => 'Generations',
           'column' => 'generations',
@@ -295,9 +453,10 @@ class Analysis
         ]    
       ],      
       [
+        'id' => 'durfit',
         'title' => 'Duration Variance VS Fitness',
         'static' => $durationStatic,
-        'sets' => $durationSets,
+        'graphs' => $durationGraphs,
         'x' => [
           'label' => 'Generations',
           'column' => 'generations',
@@ -309,9 +468,10 @@ class Analysis
         ]    
       ],      
       [
+        'id' => 'durrun',
         'title' => 'Duration Variance VS Runtime',
         'static' => $durationStatic,
-        'sets' => $durationSets,
+        'graphs' => $durationGraphs,
         'x' => [
           'label' => 'Generations',
           'column' => 'generations',
@@ -321,21 +481,23 @@ class Analysis
           'label' => 'Duration',
           'column' => 'scaled_millis'
         ]    
+      ],
+      [
+        'id' => 'dursft',
+        'title' => 'Duration Variance VS Scaled Fitness',
+        'static' => $durationStatic,
+        'graphs' => $durationGraphs,
+        'x' => [
+          'label' => 'Generations',
+          'column' => 'generations',
+          'values' => [20,40,60,80,100,120,140,160,180,200,220,240,260,280,300]
         ],
-        [
-          'title' => 'Duration Variance VS Scaled Fitness',
-          'static' => $durationStatic,
-          'sets' => $durationSets,
-          'x' => [
-            'label' => 'Generations',
-            'column' => 'generations',
-            'values' => [20,40,60,80,100,120,140,160,180,200,220,240,260,280,300]
-          ],
-          'y' => [
-            'label' => 'Fitness',
-            'column' => 'scaled_fitness'
-          ]    
-        ]
+        'y' => [
+          'label' => 'Fitness',
+          'column' => 'scaled_fitness'
+        ]    
+      ]
     ];
   }
 }
+
