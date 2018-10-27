@@ -7,7 +7,16 @@ $(document).ready(function (){
   //   }
   // });  
 
-  $.post('/bellcurve', {}, function (response) {
+  renderBallcurve(40);
+
+  $('#getballcurve').click(function (){
+    renderBallcurve(parseInt($('#buckets').val()));
+  });
+});
+
+
+function renderBallcurve(buckets){
+  $.post('/bellcurve', {buckets: buckets}, function (response) {
     ctx = document.getElementById("bellcurve").getContext('2d');
     var data = response.data.map(function (d) {return d.y});
     var labels = response.data.map(function (d) {return d.x});
@@ -42,4 +51,4 @@ $(document).ready(function (){
         }
     });
   });
-});
+}

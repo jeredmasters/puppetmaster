@@ -81,7 +81,15 @@
 
     <div class="container">
       <div class="row">
-        <canvas id="bellcurve"/>
+        <div class="col-md-6">
+          <input type="text" class="form-control" id="buckets"/>
+          <button type="button" class="btn btn-default" id="getballcurve">Get</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="offset-md-2 col-md-8">
+          <canvas id="bellcurve" width='400' height='250'/>    
+        </div>    
       </div>
     </div>
   </body>
