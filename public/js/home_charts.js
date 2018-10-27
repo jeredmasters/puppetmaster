@@ -7,26 +7,15 @@ $(document).ready(function (){
     }
   });  
 
-  renderBallcurve(40);
+  ctx = document.getElementById("bellcurve").getContext('2d');
 
-  $('#getballcurve').click(function (){
-    renderBallcurve(parseInt($('#buckets').val()));
-  });
-});
-
-
-function renderBallcurve(buckets){
-  $.post('/bellcurve', {buckets: buckets}, function (response) {
-    ctx = document.getElementById("bellcurve").getContext('2d');
-    var data = response.data.map(function (d) {return d.y});
-    var labels = response.data.map(function (d) {return d.x});
-    var myLineChart = new Chart(ctx, {
+    window.bellcurve = new Chart(ctx, {
         
         type: 'line',
         data: {
-          labels: labels,
+          labels: [],
           datasets: [{ 
-            data: data,
+            data: [],
             label: "Number of results",
             borderColor: "#3e95cd",
             fill: false
@@ -50,5 +39,21 @@ function renderBallcurve(buckets){
           }
         }
     });
+
+  renderBallcurve(40);
+
+  $('#getballcurve').click(function (){
+    renderBallcurve(parseInt($('#buckets').val()));
+  });
+});
+
+
+function renderBallcurve(buckets){
+  $.post('/bellcurve', {buckets: buckets}, function (response) {
+    var data = response.data.map(function (d) {return d.y});
+    var labels = response.data.map(function (d) {return d.x});
+    window.bellcurve.data.labels = labels;
+    window.bellcurve.data.datasets[0].data = data;
+    window.bellcurve.update();
   });
 }
