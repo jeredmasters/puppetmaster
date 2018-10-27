@@ -11,13 +11,14 @@ $(document).ready(function (){
 
     window.bellcurve = new Chart(ctx, {
         
-        type: 'line',
+        type: 'bar',
         data: {
           labels: [],
           datasets: [{ 
             data: [],
             label: "Number of results",
             borderColor: "#3e95cd",
+            backgroundColor: "#339",
             fill: false
           }],
         },
@@ -51,7 +52,7 @@ $(document).ready(function (){
 function renderBallcurve(buckets){
   $.post('/bellcurve', {buckets: buckets}, function (response) {
     var data = response.data.map(function (d) {return d.y});
-    var labels = response.data.map(function (d) {return d.x});
+    var labels = response.data.map(function (d) {return d.x1 + " - " + d.x2});
     window.bellcurve.data.labels = labels;
     window.bellcurve.data.datasets[0].data = data;
     window.bellcurve.update();

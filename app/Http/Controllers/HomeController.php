@@ -56,6 +56,9 @@ class HomeController extends BaseController
     $resolution = $maxFitness / $bucketCount;
 
     $buckets = [];
+    for($i = 0; $i < $bucketCount; $i++){
+      $buckets[$i * $resolution] = 0;
+    }
 
     foreach($results as $result){
       $bucket = intval($result->fitness / $resolution) * $resolution;
@@ -69,7 +72,8 @@ class HomeController extends BaseController
 
     foreach($buckets as $bucket => $count){
       $data[] = [
-        'x' => $bucket,
+        'x1' => $bucket,
+        'x2' => intval($bucket + $resolution - 1),
         'y' => $count
       ];
     }
