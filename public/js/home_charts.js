@@ -36,7 +36,21 @@ $(document).ready(function (){
               fontStyle: '',
               text:	"Population=100, Generations=200, MutationRate=5, MutationVariance=Linear, SteepestDescent=Off"
             }
-          }
+          },
+          scales: {
+            xAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: "Fitness Range"
+              }
+            }],
+            yAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: "Count"
+              }
+            }]
+          },
         }
     });
 
