@@ -17,7 +17,6 @@ $(document).ready(function (){
           datasets: [{ 
             data: [],
             label: "Number of results",
-            borderColor: "#3e95cd",
             backgroundColor: "#339",
             fill: false
           }],
