@@ -76,7 +76,7 @@
       </div>
     </div>
     <div class="container">
-      <div class="row">
+      <div class="row top-margin-lg">
         <div class="col-md-6">
           <input type="text" class="form-control" id="buckets"/>
           <button type="button" class="btn btn-default" id="getballcurve">Get</button>
