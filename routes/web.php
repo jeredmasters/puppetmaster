@@ -14,5 +14,6 @@
 Route::get('/', 'HomeController@index');
 Route::post('analyses/', 'HomeController@analyses');
 Route::post('results/', 'HomeController@results');
+Route::any('bellcurve/', 'HomeController@bellcurve');
 
 Route::get('dump/{type}', 'ExportController@dump');

@@ -49,4 +49,33 @@ class HomeController extends BaseController
     );
   }
 
+  public function bellcurve(Request $request){
+    $maxFitness = Result::where('test_id', 670)->where('status', 'complete')->max('fitness');
+    $results = Result::where('test_id', 670)->where('status', 'complete')->orderBy('fitness', 'ASC')->get();
+    $bucketCount = $request->input('buckets', 40);
+    $resolution = $maxFitness / $bucketCount;
+
+    $buckets = [];
+
+    foreach($results as $result){
+      $bucket = intval($result->fitness / $resolution) * $resolution;
+      if (!isset($buckets[$bucket])){
+        $buckets[$bucket] = 0;
+      }
+      $buckets[$bucket]++;
+    }
+
+    $data = [];
+
+    foreach($buckets as $bucket => $count){
+      $data[] = [
+        'x' => $bucket,
+        'y' => $count
+      ];
+    }
+
+    return response()->json([
+      'data' => $data
+    ]);
+  }
 }

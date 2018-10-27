@@ -78,5 +78,11 @@
     <div class="container" id="chartarea">
 
     </div>
+
+    <div class="container">
+      <div class="row">
+        <canvas id="bellcurve"/>
+      </div>
+    </div>
   </body>
 </html>
