@@ -57,7 +57,7 @@ class HomeController extends BaseController
       ->where('steepest_descent', $request->input('steepest_descent', 'false') == 'true')
       ->first();
 
-    $maxFitness = Result::where('test_id', $test->id)->where('status', 'complete')->max('fitness');
+    $maxFitness = 8000; // Result::where('test_id', $test->id)->where('status', 'complete')->max('fitness');
     $results = Result::where('test_id', $test->id)->where('status', 'complete')->orderBy('fitness', 'ASC')->get();
     $bucketCount = $request->input('buckets', 100);
     $resolution = $maxFitness / $bucketCount;
