@@ -84,7 +84,12 @@
       </div>
       <div class="row">
         <div class="offset-md-2 col-md-8">
-          <canvas id="bellcurve" width='400' height='250'/>    
+          <canvas id="bellcurve1" width='400' height='250'/>    
+        </div>    
+      </div>
+      <div class="row">
+        <div class="offset-md-2 col-md-8">
+          <canvas id="bellcurve2" width='400' height='250'/>    
         </div>    
       </div>
     </div>

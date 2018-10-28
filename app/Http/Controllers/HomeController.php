@@ -50,9 +50,16 @@ class HomeController extends BaseController
   }
 
   public function bellcurve(Request $request){
-    $maxFitness = Result::where('test_id', 670)->where('status', 'complete')->max('fitness');
-    $results = Result::where('test_id', 670)->where('status', 'complete')->orderBy('fitness', 'ASC')->get();
-    $bucketCount = $request->input('buckets', 40);
+    $test = Test::where('population', 100)
+      ->where('generations', 200)
+      ->where('mutation_variance', 1)
+      ->where('mutation_rate', 5)
+      ->where('steepest_descent', $request->input('steepest_descent', 'false') == 'true')
+      ->first();
+
+    $maxFitness = Result::where('test_id', $test->id)->where('status', 'complete')->max('fitness');
+    $results = Result::where('test_id', $test->id)->where('status', 'complete')->orderBy('fitness', 'ASC')->get();
+    $bucketCount = $request->input('buckets', 100);
     $resolution = $maxFitness / $bucketCount;
 
     $buckets = [];

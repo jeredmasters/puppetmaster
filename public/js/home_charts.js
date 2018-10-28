@@ -7,9 +7,9 @@ $(document).ready(function (){
     }
   });  
 
-  ctx = document.getElementById("bellcurve").getContext('2d');
+  ctx1 = document.getElementById("bellcurve1").getContext('2d');
 
-    window.bellcurve = new Chart(ctx, {
+    window.bellcurve1 = new Chart(ctx1, {
         
         type: 'bar',
         data: {
@@ -24,7 +24,7 @@ $(document).ready(function (){
         options: {
           title: {
             display: true,
-            text: "Sample Fitness Distribution",
+            text: "Fitness Distribution without Steepest Descent",
             fontFamily: 'arial'
           },        
           plugins: {
@@ -53,8 +53,53 @@ $(document).ready(function (){
           },
         }
     });
+    ctx2 = document.getElementById("bellcurve2").getContext('2d');
+    window.bellcurve2 = new Chart(ctx2, {
+        
+      type: 'bar',
+      data: {
+        labels: [],
+        datasets: [{ 
+          data: [],
+          label: "Number of results",
+          backgroundColor: "#339",
+          fill: false
+        }],
+      },
+      options: {
+        title: {
+          display: true,
+          text: "Fitness Distribution with Steepest Descent",
+          fontFamily: 'arial'
+        },        
+        plugins: {
+          chartJsPluginSubtitle: {
+            display:	true,
+            fontSize:	12,
+            fontFamily:	"Arial",
+            fontColor: '#999',
+            fontStyle: '',
+            text:	"Population=100, Generations=200, MutationRate=5, MutationVariance=Linear, SteepestDescent=On"
+          }
+        },
+        scales: {
+          xAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: "Fitness Range"
+            }
+          }],
+          yAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: "Count"
+            }
+          }]
+        },
+      }
+  });
 
-  renderBallcurve(40);
+  renderBallcurve(100);
 
   $('#getballcurve').click(function (){
     renderBallcurve(parseInt($('#buckets').val()));
@@ -63,11 +108,18 @@ $(document).ready(function (){
 
 
 function renderBallcurve(buckets){
-  $.post('/bellcurve', {buckets: buckets}, function (response) {
+  $.post('/bellcurve', {buckets: buckets, steepest_descent: 'false'}, function (response) {
     var data = response.data.map(function (d) {return d.y});
     var labels = response.data.map(function (d) {return d.x1 + " - " + d.x2});
-    window.bellcurve.data.labels = labels;
-    window.bellcurve.data.datasets[0].data = data;
-    window.bellcurve.update();
+    window.bellcurve1.data.labels = labels;
+    window.bellcurve1.data.datasets[0].data = data;
+    window.bellcurve1.update();
+  });
+  $.post('/bellcurve', {buckets: buckets, steepest_descent: 'true'}, function (response) {
+    var data = response.data.map(function (d) {return d.y});
+    var labels = response.data.map(function (d) {return d.x1 + " - " + d.x2});
+    window.bellcurve2.data.labels = labels;
+    window.bellcurve2.data.datasets[0].data = data;
+    window.bellcurve2.update();
   });
 }
