@@ -479,7 +479,7 @@ class Analysis
           'values' => [20,40,60,80,100,120,140,160,180,200,220,240,260,280,300]
         ],
         'y' => [
-          'label' => 'Duration',
+          'label' => 'Duration Index',
           'column' => 'scaled_millis'
         ]    
       ],
