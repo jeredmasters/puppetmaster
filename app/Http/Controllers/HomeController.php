@@ -57,7 +57,7 @@ class HomeController extends BaseController
       ->where('steepest_descent', $request->input('steepest_descent', 'false') == 'true')
       ->first();
 
-    $maxFitness = 8000; // Result::where('test_id', $test->id)->where('status', 'complete')->max('fitness');
+    $maxFitness = 6000; // Result::where('test_id', $test->id)->where('status', 'complete')->max('fitness');
     $query = Result::where('test_id', $test->id)->where('status', 'complete')->orderBy('fitness', 'ASC');
     $totalcount = $query->count();
     $results = $query->get();
