@@ -230,22 +230,22 @@ class Analysis
     $crossoverGraphs = [
       [
         'id' => '45w7nn',
-        'subtitle' => "Population=200, Generations=200, MutationRate=4, MutationVariance=None, SteepestDescent=Off",
+        'subtitle' => "Population=200, Generations=200, MutationRate=4, SteepestDescent=Off",
         'sets' => [static::crSet(0, false), static::crSet(1, false), static::crSet(2, false)]
       ],
       [
         'id' => '9ps5ej',
-        'subtitle' => "Population=200, Generations=200, MutationRate=4, MutationVariance=None, SteepestDescent=On",
+        'subtitle' => "Population=200, Generations=200, MutationRate=4, SteepestDescent=On",
         'sets' => [static::crSet(0, true), static::crSet(1, true), static::crSet(2, true)]
       ],
       [
         'id' => 'ghm68o',
-        'subtitle' => "Population=200, Generations=200, MutationRate=4, MutationVariance=None, SteepestDescent=Off",
+        'subtitle' => "Population=200, Generations=200, MutationRate=4, SteepestDescent=Off",
         'sets' => [static::crSet(5, false), static::crSet(10, false), static::crSet(20, false)]
       ],
       [
         'id' => 'aw59hj',
-        'subtitle' => "Population=200, Generations=200, MutationRate=4, MutationVariance=None, SteepestDescent=On",
+        'subtitle' => "Population=200, Generations=200, MutationRate=4, SteepestDescent=On",
         'sets' => [static::crSet(5, true), static::crSet(10, true), static::crSet(20, true)]
       ],
     ];
@@ -390,7 +390,7 @@ class Analysis
         'graphs' => [
           [
             'id' => '45wb7',
-            'subtitle' => "Population=200, Generations=200, MutationRate=4, MutationVariance=None, SteepestDescent=Off",
+            'subtitle' => "Population=200, Generations=200, MutationRate=4, SteepestDescent=Off",
             'sets' => [
               ['label' => 'SelectionPressure=1', 'filter' => ['selection_pressure' => 1, 'steepest_descent' => 0]],
               ['label' => 'SelectionPressure=2', 'filter' => ['selection_pressure' => 2, 'steepest_descent' => 0]],
@@ -398,7 +398,7 @@ class Analysis
             ],
           [
             'id' => 'n584e',
-            'subtitle' => "Population=200, Generations=200, MutationRate=4, MutationVariance=None, SteepestDescent=On",
+            'subtitle' => "Population=200, Generations=200, MutationRate=4, SteepestDescent=On",
             'sets' => [
               ['label' => 'SelectionPressure=1', 'filter' => ['selection_pressure' => 1, 'steepest_descent' => 1], 'style' => 'dashed'],
               ['label' => 'SelectionPressure=2', 'filter' => ['selection_pressure' => 2, 'steepest_descent' => 1], 'style' => 'dashed'],
@@ -406,7 +406,7 @@ class Analysis
             ],
           [
             'id' => 'e56ui',
-            'subtitle' => "Population=200, Generations=200, MutationRate=4, MutationVariance=None, SteepestDescent=Off",
+            'subtitle' => "Population=200, Generations=200, MutationRate=4, SteepestDescent=Off",
             'sets' => [
               ['label' => 'SelectionPressure=3', 'filter' => ['selection_pressure' => 3, 'steepest_descent' => 0]],
               ['label' => 'SelectionPressure=4', 'filter' => ['selection_pressure' => 4, 'steepest_descent' => 0]],
@@ -414,7 +414,7 @@ class Analysis
             ],
           [
             'id' => 'fly42',
-            'subtitle' => "Population=200, Generations=200, MutationRate=4, MutationVariance=None, SteepestDescent=On",
+            'subtitle' => "Population=200, Generations=200, MutationRate=4, SteepestDescent=On",
             'sets' => [
               ['label' => 'SelectionPressure=3', 'filter' => ['selection_pressure' => 3, 'steepest_descent' => 1], 'style' => 'dashed'],
               ['label' => 'SelectionPressure=4', 'filter' => ['selection_pressure' => 4, 'steepest_descent' => 1], 'style' => 'dashed'],
