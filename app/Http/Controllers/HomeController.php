@@ -58,7 +58,9 @@ class HomeController extends BaseController
       ->first();
 
     $maxFitness = 8000; // Result::where('test_id', $test->id)->where('status', 'complete')->max('fitness');
-    $results = Result::where('test_id', $test->id)->where('status', 'complete')->orderBy('fitness', 'ASC')->get();
+    $query = Result::where('test_id', $test->id)->where('status', 'complete')->orderBy('fitness', 'ASC');
+    $totalcount = $query->count();
+    $results = $query->get();
     $bucketCount = $request->input('buckets', 100);
     $resolution = $maxFitness / $bucketCount;
 
@@ -81,7 +83,7 @@ class HomeController extends BaseController
       $data[] = [
         'x1' => $bucket,
         'x2' => intval($bucket + $resolution - 1),
-        'y' => $count
+        'y' => ($count*100)/$totalcount
       ];
     }
 

@@ -47,7 +47,7 @@ $(document).ready(function (){
             yAxes: [{
               scaleLabel: {
                 display: true,
-                labelString: "Count"
+                labelString: "Percent %"
               }
             }]
           },
@@ -92,7 +92,7 @@ $(document).ready(function (){
           yAxes: [{
             scaleLabel: {
               display: true,
-              labelString: "Count"
+              labelString: "Percent %"
             }
           }]
         },
