@@ -24,7 +24,7 @@ $(document).ready(function (){
         options: {
           title: {
             display: true,
-            text: "Fitness Distribution without Steepest Descent",
+            text: "Fitness Distribution: 1500 Tests without Steepest Descent",
             fontFamily: 'arial'
           },        
           plugins: {
@@ -34,7 +34,7 @@ $(document).ready(function (){
               fontFamily:	"Arial",
               fontColor: '#999',
               fontStyle: '',
-              text:	"Population=100, Generations=200, MutationRate=5, MutationVariance=Linear, SteepestDescent=Off"
+              text:	"Population=200, Generations=200, MutationRate=5, MutationVariance=Linear, SteepestDescent=Off"
             }
           },
           scales: {
@@ -51,6 +51,9 @@ $(document).ready(function (){
               }
             }]
           },
+          legend: {
+            display: false,
+          }
         }
     });
     ctx2 = document.getElementById("bellcurve2").getContext('2d');
@@ -69,7 +72,7 @@ $(document).ready(function (){
       options: {
         title: {
           display: true,
-          text: "Fitness Distribution with Steepest Descent",
+          text: "Fitness Distribution: 1500 Tests with Steepest Descent",
           fontFamily: 'arial'
         },        
         plugins: {
@@ -79,7 +82,7 @@ $(document).ready(function (){
             fontFamily:	"Arial",
             fontColor: '#999',
             fontStyle: '',
-            text:	"Population=100, Generations=200, MutationRate=5, MutationVariance=Linear, SteepestDescent=On"
+            text:	"Population=200, Generations=200, MutationRate=5, MutationVariance=Linear, SteepestDescent=On"
           }
         },
         scales: {
@@ -96,6 +99,9 @@ $(document).ready(function (){
             }
           }]
         },
+        legend: {
+          display: false,
+        }
       }
   });
 

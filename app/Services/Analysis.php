@@ -186,19 +186,19 @@ class Analysis
 
   private static function mrSet($mr, $sd){
     if ($sd){
-      return ['label' => $mr, 'filter' => ['mutation_rate' => $mr, 'steepest_descent' => 1], 'style' => 'dashed'];
+      return ['label' => "MutationRate=$mr", 'filter' => ['mutation_rate' => $mr, 'steepest_descent' => 1], 'style' => 'dashed'];
     }
     else{
-      return ['label' => $mr, 'filter' => ['mutation_rate' => $mr, 'steepest_descent' => 0]];
+      return ['label' => "MutationRate=$mr", 'filter' => ['mutation_rate' => $mr, 'steepest_descent' => 0]];
     }
   }
 
   private static function crSet($cr, $sd){
     if ($sd){
-      return ['label' => $cr, 'filter' => ['crossover_rate' => $cr, 'steepest_descent' => 1], 'style' => 'dashed'];
+      return ['label' => "CrossoverSlicing=$cr", 'filter' => ['crossover_rate' => $cr, 'steepest_descent' => 1], 'style' => 'dashed'];
     }
     else{
-      return ['label' => $cr, 'filter' => ['crossover_rate' => $cr, 'steepest_descent' => 0]];
+      return ['label' => "CrossoverSlicing=$cr", 'filter' => ['crossover_rate' => $cr, 'steepest_descent' => 0]];
     }
   }
 
@@ -207,22 +207,22 @@ class Analysis
     $mutationGraphs = [
       [
         'id' => 'q4h56t',
-        'subtitle' => "Normal",
+        'subtitle' => "Population=200, Generations=200, SteepestDescent=Off",
         'sets' => [static::mrSet(0, false), static::mrSet(1, false), static::mrSet(2, false)]
       ],
       [
         'id' => '3m7wvw',
-        'subtitle' => "Steepest Descent",
+        'subtitle' => "Population=200, Generations=200, SteepestDescent=On",
         'sets' => [static::mrSet(0, true), static::mrSet(1, true), static::mrSet(2, true)]
       ],
       [
         'id' => 'm758ei',
-        'subtitle' => "Normal",
+        'subtitle' => "Population=200, Generations=200, SteepestDescent=Off",
         'sets' => [static::mrSet(5, false), static::mrSet(10, false), static::mrSet(20, false)]
       ],
       [
         'id' => 'z58654',
-        'subtitle' => "Steepest Descent",
+        'subtitle' => "Population=200, Generations=200, SteepestDescent=On",
         'sets' => [static::mrSet(5, true), static::mrSet(10, true), static::mrSet(20, true)]
       ],
     ];
@@ -230,22 +230,22 @@ class Analysis
     $crossoverGraphs = [
       [
         'id' => '45w7nn',
-        'subtitle' => "Normal",
+        'subtitle' => "Population=200, Generations=200, MutationRate=4, MutationVariance=None, SteepestDescent=Off",
         'sets' => [static::crSet(0, false), static::crSet(1, false), static::crSet(2, false)]
       ],
       [
         'id' => '9ps5ej',
-        'subtitle' => "Steepest Descent",
+        'subtitle' => "Population=200, Generations=200, MutationRate=4, MutationVariance=None, SteepestDescent=On",
         'sets' => [static::crSet(0, true), static::crSet(1, true), static::crSet(2, true)]
       ],
       [
         'id' => 'ghm68o',
-        'subtitle' => "Normal",
+        'subtitle' => "Population=200, Generations=200, MutationRate=4, MutationVariance=None, SteepestDescent=Off",
         'sets' => [static::crSet(5, false), static::crSet(10, false), static::crSet(20, false)]
       ],
       [
         'id' => 'aw59hj',
-        'subtitle' => "Steepest Descent",
+        'subtitle' => "Population=200, Generations=200, MutationRate=4, MutationVariance=None, SteepestDescent=On",
         'sets' => [static::crSet(5, true), static::crSet(10, true), static::crSet(20, true)]
       ],
     ];
@@ -253,17 +253,18 @@ class Analysis
     $durationGraphs = [
       [
         'id' => 'wn457',
+        'subtitle' => "SteepestDescent=Off",
         'sets' => [
-          ['label' => 'Off', 'filter' => ['duration_variance' => 0, 'steepest_descent' => 0]],
-          ['label' => 'On', 'filter' => ['duration_variance' => 1, 'steepest_descent' => 0]],
+          ['label' => 'DurationVariance=Off', 'filter' => ['duration_variance' => 0, 'steepest_descent' => 0]],
+          ['label' => 'DurationVariance=On', 'filter' => ['duration_variance' => 1, 'steepest_descent' => 0]],
         ]
       ],
       [
         'id' => 'srj66',
-        'subtitle' => "Steepest Descent",
+        'subtitle' => "SteepestDescent=On",
         'sets' => [
-          ['label' => 'Off', 'filter' => ['duration_variance' => 0, 'steepest_descent' => 1], 'style' => 'dashed'],
-          ['label' => 'On', 'filter' => ['duration_variance' => 1, 'steepest_descent' => 1], 'style' => 'dashed'],
+          ['label' => 'DurationVariance=Off', 'filter' => ['duration_variance' => 0, 'steepest_descent' => 1], 'style' => 'dashed'],
+          ['label' => 'DurationVariance=On', 'filter' => ['duration_variance' => 1, 'steepest_descent' => 1], 'style' => 'dashed'],
         ]
       ]
     ];
@@ -294,9 +295,9 @@ class Analysis
           [
             'id' => '45wb7',
             'sets' => [
-              ['label' => 20, 'filter' => ['population' => 20]],
-              ['label' => 100, 'filter' => ['population' => 100]],
-              ['label' => 200, 'filter' => ['population' => 200]]
+              ['label' => "Population=20", 'filter' => ['population' => 20]],
+              ['label' => "Population=100", 'filter' => ['population' => 100]],
+              ['label' => "Population=200", 'filter' => ['population' => 200]]
             ],
           ]
         ],        
@@ -389,34 +390,34 @@ class Analysis
         'graphs' => [
           [
             'id' => '45wb7',
-            'subtitle' => "Normal",
+            'subtitle' => "Population=200, Generations=200, MutationRate=4, MutationVariance=None, SteepestDescent=Off",
             'sets' => [
-              ['label' => '1', 'filter' => ['selection_pressure' => 1, 'steepest_descent' => 0]],
-              ['label' => '2', 'filter' => ['selection_pressure' => 2, 'steepest_descent' => 0]],
+              ['label' => 'SelectionPressure=1', 'filter' => ['selection_pressure' => 1, 'steepest_descent' => 0]],
+              ['label' => 'SelectionPressure=2', 'filter' => ['selection_pressure' => 2, 'steepest_descent' => 0]],
             ]
             ],
           [
             'id' => 'n584e',
-            'subtitle' => "Steepest Descent",
+            'subtitle' => "Population=200, Generations=200, MutationRate=4, MutationVariance=None, SteepestDescent=On",
             'sets' => [
-              ['label' => '1 SD', 'filter' => ['selection_pressure' => 1, 'steepest_descent' => 1], 'style' => 'dashed'],
-              ['label' => '2 SD', 'filter' => ['selection_pressure' => 2, 'steepest_descent' => 1], 'style' => 'dashed'],
+              ['label' => 'SelectionPressure=1', 'filter' => ['selection_pressure' => 1, 'steepest_descent' => 1], 'style' => 'dashed'],
+              ['label' => 'SelectionPressure=2', 'filter' => ['selection_pressure' => 2, 'steepest_descent' => 1], 'style' => 'dashed'],
             ]
             ],
           [
             'id' => 'e56ui',
-            'subtitle' => "Normal",
+            'subtitle' => "Population=200, Generations=200, MutationRate=4, MutationVariance=None, SteepestDescent=Off",
             'sets' => [
-              ['label' => '3', 'filter' => ['selection_pressure' => 3, 'steepest_descent' => 0]],
-              ['label' => '4', 'filter' => ['selection_pressure' => 4, 'steepest_descent' => 0]],
+              ['label' => 'SelectionPressure=3', 'filter' => ['selection_pressure' => 3, 'steepest_descent' => 0]],
+              ['label' => 'SelectionPressure=4', 'filter' => ['selection_pressure' => 4, 'steepest_descent' => 0]],
             ]
             ],
           [
             'id' => 'fly42',
-            'subtitle' => "Steepest Descent",
+            'subtitle' => "Population=200, Generations=200, MutationRate=4, MutationVariance=None, SteepestDescent=On",
             'sets' => [
-              ['label' => '3 SD', 'filter' => ['selection_pressure' => 3, 'steepest_descent' => 1], 'style' => 'dashed'],
-              ['label' => '4 SD', 'filter' => ['selection_pressure' => 4, 'steepest_descent' => 1], 'style' => 'dashed'],
+              ['label' => 'SelectionPressure=3', 'filter' => ['selection_pressure' => 3, 'steepest_descent' => 1], 'style' => 'dashed'],
+              ['label' => 'SelectionPressure=4', 'filter' => ['selection_pressure' => 4, 'steepest_descent' => 1], 'style' => 'dashed'],
             ]
           ]
         ],
@@ -432,7 +433,7 @@ class Analysis
       ],
       [
         'id' => 'crsovr',
-        'title' => 'Crossover Rate',
+        'title' => 'Crossover Slicing',
         'static' => [
           'selection_pressure' => 2,
           'population' => 100,
