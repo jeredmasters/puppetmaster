@@ -378,6 +378,47 @@ class Analysis
         ]    
       ],
       [
+        'title' => 'Mutation Variance',
+        'static' => [
+          'population' => 100,
+          'duration' => 100 * 150,
+          'crossover_rate' => 6,
+          'mutation_rate' => 5,
+          'duration_variance' => 0,
+          'selection_pressure' => 2
+        ],
+        'graphs' => [
+          [
+            'id' => '45wb7',
+            'subtitle' => "Normal Descent",
+            'sets' => [
+              ['label' => 'None', 'filter' => ['mutation_variance' => 0, 'steepest_descent' => 0]],
+              ['label' => 'Linear', 'filter' => ['mutation_variance' => 1, 'steepest_descent' => 0]],
+              ['label' => 'Bitwise', 'filter' => ['mutation_variance' => 2, 'steepest_descent' => 0]],
+            ]
+            ],
+          [
+            'id' => 'koiuer',
+            'subtitle' => "Steepest Descent",
+            'sets' => 
+            [
+              ['label' => 'None', 'filter' => ['mutation_variance' => 0, 'steepest_descent' => 1], 'style' => 'dashed'],
+              ['label' => 'Linear', 'filter' => ['mutation_variance' => 1, 'steepest_descent' => 1], 'style' => 'dashed'],
+              ['label' => 'Bitwise', 'filter' => ['mutation_variance' => 2, 'steepest_descent' => 1], 'style' => 'dashed'],
+            ]
+          ]
+        ],
+        'x' => [
+          'label' => 'Generations',
+          'column' => 'generations',
+          'values' => [20,40,60,80,100,120,140,160,180,200]
+        ],
+        'y' => [
+          'label' => 'Fitness',
+          'column' => 'fitness'
+        ]    
+      ],
+      [
         'title' => 'Selection Pressure',
         'static' => [
           'population' => 100,
